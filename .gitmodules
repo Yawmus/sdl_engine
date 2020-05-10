@@ -1,0 +1,4 @@
+[submodule "sdl-gpu"]
+	path = sdl-gpu
+	url = git@github.com:Yawmus/sdl-gpu.git
+	branch = master
