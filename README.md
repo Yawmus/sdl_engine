@@ -1,4 +1,4 @@
-# sdl_engine
+# The engine
 
 ------------------------------------------------------------------------------
 5/10/20 - Working through architecture decisions
