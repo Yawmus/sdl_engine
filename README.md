@@ -16,6 +16,13 @@ hotreloaded from the map editor, game engine and LUA script changes. Once this
 pipeline is complete, future 2D endeavours will be fluid to implement off of
 this base-project.
 
+In sdl-gpu...
+`
+cmake -G "Unix Makefiles"
+make
+sudo make install
+`
+
 PJ
 ------------------------------------------------------------------------------
 
