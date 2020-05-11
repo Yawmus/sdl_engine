@@ -1,6 +1,5 @@
 # The engine
 
-------------------------------------------------------------------------------
 5/10/20 - Working through architecture decisions
 
 Grabbed sdl-gpu, a hybrid of SDL, with the ability to batch gfx calls and write
@@ -17,5 +16,3 @@ pipeline is complete, future 2D endeavours will be fluid to implement off of
 this base-project.
 
 PJ
-------------------------------------------------------------------------------
-
