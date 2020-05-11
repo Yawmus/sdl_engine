@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------
 5/10/20 - Working through architecture decisions
 
-Cloned SDL GPU, a hybrid of SDL, with the ability to match gfx calls and write
+Grabbed sdl-gpu, a hybrid of SDL, with the ability to match gfx calls and write
 shaders. My current plan is to create a map editor first using this
 technology, then split the project and write the core game logic in a separate
 C++ project. Lastly, I want to integrate LUA to allow scripting/game design to
