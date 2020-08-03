@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/Users/Yawmus/projects/sdl_engine",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Library/Frameworks/SDL2.framework/Headers -I/Library/Frameworks/SDL2_ttf.framework/Headers -I/Users/Yawmus/projects/sdl_engine/SDL_gpu/include -I/usr/local/include/lua  -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -F/Library/Frameworks  -std=gnu++17 -o CMakeFiles/start.dir/src/Main.cpp.o -c /Users/Yawmus/projects/sdl_engine/src/Main.cpp",
+  "file": "/Users/Yawmus/projects/sdl_engine/src/Main.cpp"
+},
+{
+  "directory": "/Users/Yawmus/projects/sdl_engine",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Library/Frameworks/SDL2.framework/Headers -I/Library/Frameworks/SDL2_ttf.framework/Headers -I/Users/Yawmus/projects/sdl_engine/SDL_gpu/include -I/usr/local/include/lua  -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++17 -o CMakeFiles/INC.dir/src/Game.cpp.o -c /Users/Yawmus/projects/sdl_engine/src/Game.cpp",
+  "file": "/Users/Yawmus/projects/sdl_engine/src/Game.cpp"
+},
+{
+  "directory": "/Users/Yawmus/projects/sdl_engine",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Library/Frameworks/SDL2.framework/Headers -I/Library/Frameworks/SDL2_ttf.framework/Headers -I/Users/Yawmus/projects/sdl_engine/SDL_gpu/include -I/usr/local/include/lua  -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++17 -o CMakeFiles/INC.dir/src/Entity.cpp.o -c /Users/Yawmus/projects/sdl_engine/src/Entity.cpp",
+  "file": "/Users/Yawmus/projects/sdl_engine/src/Entity.cpp"
+}
+]
