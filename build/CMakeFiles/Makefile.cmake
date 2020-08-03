@@ -11,8 +11,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.17.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.17.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.17.2/CMakeSystem.cmake"
-  "../cmake/FindSDL2.cmake"
-  "../cmake/FindSDL2_ttf.cmake"
   "/usr/local/Cellar/cmake/3.17.2/share/cmake/Modules/CMakeCInformation.cmake"
   "/usr/local/Cellar/cmake/3.17.2/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/usr/local/Cellar/cmake/3.17.2/share/cmake/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake"

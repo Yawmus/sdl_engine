@@ -12,20 +12,36 @@ macro(print_all_variables)
     message(STATUS "print_all_variables------------------------------------------}")
 endmacro()
 
-
 set(EXECUTABLE "start")
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON )
-set(SDL_GPU_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SDL_gpu/include")
-set(SDL_GPU_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/bin/SDL2_gpu")
 
+if(APPLE)
+	set(SDL_GPU_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_gpu.framework/Headers")
+	set(SDL_GPU_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_gpu.framework")
 
-find_package(SDL2 REQUIRED)
+	set(SDL2_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2.framework")
+	set(SDL2_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2.framework/Headers")
+
+	set(SDL2_TTF "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_TTF.framework")
+	set(SDL2_TTF "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_TTF.framework/Headers")
+elseif(WIN32)
+	set(SDL_GPU_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/win/SDL2_gpu.framework/Headers")
+	set(SDL_GPU_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/win/SDL2_gpu.framework")
+
+	set(SDL2_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/win/SDL2.framework")
+	set(SDL2_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/win/SDL2.framework/Headers")
+
+	set(SDL2_TTF "${CMAKE_CURRENT_SOURCE_DIR}/lib/win/SDL2_TTF.framework")
+	set(SDL2_TTF "${CMAKE_CURRENT_SOURCE_DIR}/lib/win/SDL2_TTF.framework/Headers")
+endif()
+
+#find_package(SDL2 REQUIRED)
 #find_package(SDL_gpu REQUIRED)
-find_package(SDL2_ttf REQUIRED)
+#find_package(SDL2_ttf REQUIRED)
 find_package(Lua REQUIRED)
 
-#print_all_variables()
+print_all_variables()
 
 add_library(
 	INC

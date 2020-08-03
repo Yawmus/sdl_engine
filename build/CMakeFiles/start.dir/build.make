@@ -100,7 +100,6 @@ start_EXTERNAL_OBJECTS =
 start: CMakeFiles/start.dir/src/Main.cpp.o
 start: CMakeFiles/start.dir/build.make
 start: libINC.a
-start: ../bin/SDL2_gpu
 start: /usr/local/lib/liblua5.3.dylib
 start: CMakeFiles/start.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Yawmus/projects/sdl_engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable start"

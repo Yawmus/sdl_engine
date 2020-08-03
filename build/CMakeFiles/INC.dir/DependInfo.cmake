@@ -12,9 +12,9 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../start"
-  "/Library/Frameworks/SDL2.framework/Headers"
+  "../lib/osx/SDL2.framework/Headers"
   "/Library/Frameworks/SDL2_ttf.framework/Headers"
-  "../SDL_gpu/include"
+  "../lib/osx/SDL2_gpu.framework/Headers"
   "/usr/local/include/lua"
   )
 
