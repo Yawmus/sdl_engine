@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import math
 import sys
 import pyglet
 from pyglet.gl import *
@@ -17,7 +18,7 @@ else:
 
 HR_IMAGE = pyglet.image.load('./assets/images/hr.png')
 W = 25;
-H = 20;
+H = 16;
 selected_tile_x = 0
 selected_tile_y = 2
 
@@ -34,14 +35,14 @@ Matrix = [[Point2D() for x in range(H)] for y in range(W)]
 ## Populate the 2D array with empty tile values
 ###############################################################################
 for i in range(W):
-    for j in range(H - 1):
+    for j in range(H):
         Matrix[i][j].x = -1
         Matrix[i][j].y = -1
 
 ###############################################################################
 ## Renders the main program window
 ###############################################################################
-window = pyglet.window.Window(caption='Tilemap Editor', width=800, height=600)
+window = pyglet.window.Window(caption='Tilemap Editor', width=800, height=640)
 window.set_icon(pyglet.image.load('./assets/images/icon.png'))
 cursor = window.get_system_mouse_cursor(window.CURSOR_HAND)
 window.set_mouse_cursor(cursor)
@@ -122,19 +123,14 @@ def draw_ui_label():
 def save_tile_in_array(x, y):
     global selected_tile_x
     global selected_tile_y
+    # Select tile
     if x >= 0 and x <= 320 and y >= 0 and y < 96:
-        if y >= 0 and y < TILE_SIZE:
-            selected_tile_x = x // TILE_SIZE
-            selected_tile_y = 0
-        if y >= TILE_SIZE and y < 64:
-            selected_tile_x = x // TILE_SIZE
-            selected_tile_y = 1
-        if y >= 64 and y < 96:
-            selected_tile_x = x // TILE_SIZE
-            selected_tile_y = 2
-    if x >= 0 and x <= 800 and y >= 96 and y <= 736:
-        target_x = x // TILE_SIZE
-        target_y = (736 - y) // TILE_SIZE
+        selected_tile_x = math.floor(x / 32);
+        selected_tile_y = math.floor(y / 32);
+    # Draw tile
+    if x >= 0 and x < 800 and y >= 128 and y < 640:
+        target_x = math.floor(x / 32)
+        target_y = math.floor((640 - y) / 32)
         p_2d = Point2D()
         p_2d.x = selected_tile_x
         p_2d.y = selected_tile_y
@@ -145,11 +141,11 @@ def save_tile_in_array(x, y):
 ###############################################################################
 def draw_array_of_selected_tiles():
     for i in range(W):
-        for j in range(H - 1):
+        for j in range(H):
             target_tile_x = Matrix[i][j].x
             target_tile_y = Matrix[i][j].y
             target_pixel_x = i * TILE_SIZE
-            target_pixel_y = 736 - j * TILE_SIZE
+            target_pixel_y = 640 - j * TILE_SIZE
             if target_tile_x != -1 and target_tile_y != -1:
                 current_tile_part = TILE_IMAGE.get_region(
                     x=target_tile_x * TILE_SIZE,
@@ -164,18 +160,18 @@ def draw_array_of_selected_tiles():
 ###############################################################################
 def save_array_to_file():
     with open('./saved.map', 'w') as file:
-        for i in range(W - 1):
-            for j in range(H - 1):
-                x_value_to_save = Matrix[i][j].x
-                y_value_to_save = Matrix[i][j].y
-                if x_value_to_save == -1:
-                    x_value_to_save = 0
-                if y_value_to_save == -1:
-                    y_value_to_save = 0
-                if j == W - 2:
-                    file.write(str(x_value_to_save) + str(y_value_to_save))
-                else:
-                    file.write(str(x_value_to_save) + str(y_value_to_save) + ",")
+        file.truncate(0)
+        for j in range(H):
+            for i in range(W):
+                x = Matrix[i][j].x
+                y = Matrix[i][j].y
+                if x == -1 and y == -1:
+                    x = y = 0
+                val = str(x) + str(y)
+                if i < W - 1:
+                    val += ","
+
+                file.write(val)
             file.write('\n')
 
 ###############################################################################
