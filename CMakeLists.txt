@@ -38,11 +38,14 @@ if(APPLE)
 	set(SDL_GPU_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_gpu.framework/Headers")
 	set(SDL_GPU_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_gpu.framework")
 
-	set(SDL2_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2.framework")
 	set(SDL2_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2.framework/Headers")
+	set(SDL2_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2.framework")
 
-	set(SDL2_TTF "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_TTF.framework")
-	set(SDL2_TTF "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_TTF.framework/Headers")
+	set(SDL2_TTF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_TTF.framework/Headers")
+	set(SDL2_TTF_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/SDL2_TTF.framework")
+
+	set(LUA_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/lua_5.3/include")
+	set(LUA_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/lua_5.3/liblua.5.3.5.dylib")
 	
 elseif(WIN32)
 	set(SDL_GPU_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/win/SDL2_gpu_include")

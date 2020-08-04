@@ -1,0 +1,4 @@
+/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/start.dir
+/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/rebuild_cache.dir
+/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/edit_cache.dir
+/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/INC.dir
