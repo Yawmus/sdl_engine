@@ -1,0 +1,4 @@
+﻿  Building Custom Rule C:/Users/ChassisOfReflection/Documents/projects/sdl_engine/CMakeLists.txt
+  Main.cpp
+C:\Users\ChassisOfReflection\Documents\projects\sdl_engine\src\Main.cpp(37): warning C4700: uninitialized local variable 'prev_ticks' used
+  start.vcxproj -> C:\Users\ChassisOfReflection\Documents\projects\sdl_engine\win_build\Release\start.exe

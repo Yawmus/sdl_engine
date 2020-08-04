@@ -1,0 +1,4 @@
+C:/Users/ChassisOfReflection/Documents/projects/sdl_engine/win_build/CMakeFiles/start.dir
+C:/Users/ChassisOfReflection/Documents/projects/sdl_engine/win_build/CMakeFiles/INC.dir
+C:/Users/ChassisOfReflection/Documents/projects/sdl_engine/win_build/CMakeFiles/ALL_BUILD.dir
+C:/Users/ChassisOfReflection/Documents/projects/sdl_engine/win_build/CMakeFiles/ZERO_CHECK.dir
