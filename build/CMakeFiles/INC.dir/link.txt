@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libINC.a  CMakeFiles/INC.dir/src/Entity.cpp.o CMakeFiles/INC.dir/src/Game.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libINC.a
