@@ -68,6 +68,10 @@ void Game::Initialize(int width, int height, std::string map_name)
  	L = luaL_newstate();
 	luaL_openlibs(L);
 
+	size_t nbytes = sizeof(Entity);
+	Entity *e = (Entity *)lua_newuserdata(L, nbytes);
+ 
+
 	// Load images
 	lua_LoadAssets();
 
@@ -104,20 +108,16 @@ void Game::ProcessInput(){
 				isRunning = false;
 			}
 			else if(event.key.keysym.sym == input_handler["Left"]) {
-				changed.insert(p);
-				p->transform = { -1, 0 };
+				Move(p, { -1, 0 });
 			}
 			else if(event.key.keysym.sym == input_handler["Up"]) {
-				changed.insert(p);
-				p->transform = { 0, 1 };
+				Move(p, { 0, 1 });
 			}
 			else if(event.key.keysym.sym == input_handler["Down"]) {
-				changed.insert(p);
-				p->transform = { 0, -1 };
+				Move(p, { 0, -1 });
 			}
 			else if(event.key.keysym.sym == input_handler["Right"]) {
-				changed.insert(p);
-				p->transform = { 1, 0 };
+				Move(p, { 1, 0 });
 			}
 			break;
 		default: 
@@ -125,8 +125,23 @@ void Game::ProcessInput(){
 	}
 }
 
+void Game::Move(Entity *e, Transform t){
+	int dx = e->x + t.dx;
+	int dy = e->y + t.dy;
 
-void Game::Update() {
+	// Map bounds
+	if(dx < 0 || dy < 0 || dx >= map_width || dy >= map_height){
+		return;
+	}
+	
+	// Bump
+
+	e->transform = t;
+	changed.insert(e);
+}
+
+
+void Game::Update(float delta) {
 	// Update entities
 	//lua_Update();
 
@@ -164,8 +179,12 @@ GPU_Image* Game::LoadImage(const char* image_path){
 
 Entity* Game::InitEntity(int x, int y, int id){
 	int width, height;
+	if(id_map.find(id) == id_map.end())
+	{
+		std::cerr << "Failed to find id: " << id << std::endl;
+		return NULL;
+	}
 	Entity_Type *et = id_map[id];
-	std::cout << id;
 	GPU_Image* image = asset_manager[et->asset];
 
 	Entity *e = new Entity{
@@ -214,8 +233,6 @@ void Game::BlitTexture(std::vector<Entity*> eArr){
 	}
 }
 
-
-
 void Game::Destroy() {
 	for(auto const& itr : asset_manager){
 		GPU_FreeImage(itr.second);
@@ -237,11 +254,18 @@ void Game::Destroy() {
 	GPU_Quit();
 }
 
-void Game::lua_Update(){
+void Game::lua_Update(float delta){
 	// Update
 	if(lua_Check(L, luaL_dofile(L, "../scripts/entity.lua"))){
-		lua_getglobal(L, "hello_world");
+		lua_getglobal(L, "Update");
 		if(lua_isfunction(L, -1)){
+			for(Entity* e : entities){
+				lua_pushlightuserdata(L, e);
+				lua_pushnumber(L, delta);
+
+				if(lua_Check(L, lua_pcall(L, 1, 1, 0))){
+				}
+			}
 		}
 	}
 }
@@ -301,10 +325,10 @@ void Game::lua_LoadAssets(){
 						lua_gettable(L, -2);
 						if(lua_istable(L, -1)){
 							region = new GPU_Rect{
-								lua_GetTableNum(L, "x"),
-								lua_GetTableNum(L, "y"),
-								lua_GetTableNum(L, "width"),
-								lua_GetTableNum(L, "height")
+								(float)lua_GetTableNum(L, "x"),
+								(float)lua_GetTableNum(L, "y"),
+								(float)lua_GetTableNum(L, "width"),
+								(float)lua_GetTableNum(L, "height")
 							};
 						}
 
@@ -346,7 +370,7 @@ std::string Game::lua_GetTableStr(lua_State *L, const char* property){
 	return ret;
 }
 
-float Game::lua_GetTableNum(lua_State *L, const char* property){
+lua_Number Game::lua_GetTableNum(lua_State *L, const char* property){
 	lua_pushstring(L, property);
 	lua_gettable(L, -2);
 	float ret = lua_tonumber(L, -1);
@@ -392,7 +416,13 @@ bool Game::LoadMap(std::string map_name){
 			tile = InitEntity(x, y, val);
 			bEntities.push_back(tile);
 			entities.push_back(tile);
-			std::cout << val << " ";
+
+			std::string sVal;
+			if(val < 10){
+				sVal = "0" + std::to_string(val);
+			}
+			std::cout << sVal << " ";
+
 			x++;
 		}
 		std::cout << std::endl;

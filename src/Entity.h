@@ -4,6 +4,11 @@
 #include <SDL_gpu.h>
 #include <string>
 
+struct Transform {
+	int dx;
+	int dy;
+};
+
 struct Entity {
 	int x;
 	int y;
@@ -11,12 +16,7 @@ struct Entity {
 	int prop;
 	GPU_Rect* region;
 	GPU_Image* image;
-
-	struct Transform {
-		int dx;
-		int dy;
-	} transform;
-
+	Transform transform;
 };
 
 struct Entity_Type {

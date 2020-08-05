@@ -30,7 +30,8 @@ class Game {
 		bool IsRunning() const;
 		void Initialize(int width, int height, std::string map);
 		void ProcessInput();
-		void Update();
+		void Update(float);
+		void Move(Entity*, Transform);
 		Entity* InitEntity(int, int, int);
 		void Render();
 		void BlitTexture(std::vector<Entity*>);
@@ -39,10 +40,10 @@ class Game {
 		void Destroy();
 
 		std::string lua_GetTableStr(lua_State*, const char*);
-		float lua_GetTableNum(lua_State*, const char*);
+		lua_Number lua_GetTableNum(lua_State*, const char*);
 		bool lua_Check(lua_State*, int);
 		void lua_LoadConfig();
-		void lua_Update();
+		void lua_Update(float);
 		void lua_LoadAssets();
 };
 

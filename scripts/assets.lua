@@ -30,7 +30,7 @@ ids[1] = {
 	asset = "Terrain_tilemap",
 	region = {
 		x = 32,
-		y = 0,
+		y = 64,
 		width = 32,
 		height = 32
 	}
@@ -42,7 +42,7 @@ ids[2] = {
 	asset = "Terrain_tilemap",
 	region = {
 		x = 128,
-		y = 0,
+		y = 64,
 		width = 32,
 		height = 32
 	}
@@ -69,5 +69,3 @@ assets["Obj_tilemap"] = "../assets/tilemaps/objects.png"
 function GetEntityType(id)
 	return ids[id]
 end
-
-

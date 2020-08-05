@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 		delta = ticks - prev_ticks;
 
 		game->ProcessInput();
-		game->Update();
+		game->Update(delta);
 		game->Render();
 
 		prev_ticks = ticks;
