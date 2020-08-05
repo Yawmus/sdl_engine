@@ -13,6 +13,8 @@ extern "C"{
 #include "lauxlib.h"
 }
 
+
+
 class Game {
     private:
 		bool isRunning;
@@ -20,7 +22,7 @@ class Game {
 		lua_State * L;
 		std::unordered_map<std::string, char> input_handler;
 		std::unordered_map<std::string, GPU_Image*> asset_manager;
-		std::unordered_map<int, std::string> id_map;
+		std::unordered_map<int, Entity_Type*> id_map;
 
     public:
 		Game();
@@ -36,7 +38,9 @@ class Game {
 		bool LoadMap(std::string);
 		void Destroy();
 
-		bool CheckLua(lua_State*, int);
+		std::string lua_GetTableStr(lua_State*, const char*);
+		float lua_GetTableNum(lua_State*, const char*);
+		bool lua_Check(lua_State*, int);
 		void lua_LoadConfig();
 		void lua_Update();
 		void lua_LoadAssets();

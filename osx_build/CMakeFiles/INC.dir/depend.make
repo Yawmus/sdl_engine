@@ -101,8 +101,13 @@ CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/SDL2.framework/Headers/SDL_version
 CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/SDL2.framework/Headers/SDL_video.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/SDL2.framework/Headers/begin_code.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/SDL2.framework/Headers/close_code.h
+CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/SDL2_TTF.framework/Headers/SDL_ttf.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/SDL2_gpu.framework/Headers/SDL_gpu.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/SDL2_gpu.framework/Headers/SDL_gpu_version.h
+CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/lua_5.3/include/lauxlib.h
+CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/lua_5.3/include/lua.h
+CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/lua_5.3/include/luaconf.h
+CMakeFiles/INC.dir/src/Game.cpp.o: ../lib/osx/lua_5.3/include/lualib.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../src/Constants.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../src/Entity.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../src/Game.cpp

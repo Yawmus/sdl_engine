@@ -159,7 +159,7 @@ def draw_array_of_selected_tiles():
 ## Save the selected tiles in a file
 ###############################################################################
 def save_array_to_file():
-    with open('./saved.map', 'w') as file:
+    with open('../assets/maps/./saved.map', 'w') as file:
         file.truncate(0)
         for j in range(H):
             for i in range(W):
@@ -167,9 +167,10 @@ def save_array_to_file():
                 y = Matrix[i][j].y
                 if x == -1 and y == -1:
                     x = y = 0
-                val = str(x) + str(y)
+                val = str(y) + str(x)
                 if i < W - 1:
-                    val += ","
+                    #val += ","
+                    val += " "
 
                 file.write(val)
             file.write('\n')

@@ -2,14 +2,14 @@
 #define ENTITY_H
 
 #include <SDL_gpu.h>
+#include <string>
 
 struct Entity {
 	int x;
 	int y;
 	int id;
 	int prop;
-	int width;
-	int height;
+	GPU_Rect* region;
 	GPU_Image* image;
 
 	struct Transform {
@@ -17,6 +17,13 @@ struct Entity {
 		int dy;
 	} transform;
 
+};
+
+struct Entity_Type {
+	std::string name;
+	bool blocking;  // Will get condensed into prop
+	std::string asset;
+	GPU_Rect* region;
 };
 
 #endif

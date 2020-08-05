@@ -12,26 +12,20 @@
 
 int map_width, map_height;
 
-void LoadLuaConfig();
-bool CheckLua(lua_State *L, int r);
-
-int IdToProp(int id){
+int GetProp(Entity_Type* et){
 	int prop = 0;
-
-	switch(id){
-		case 0:
+	if(et->blocking){
 		prop += 0b0001; // Blocked
-		break;
 	}
-	
+
 	return prop;
 }
 
-enum Ids {
-	PLAYER,
-	GRASS,
-	TREE
-} id;
+//enum Ids {
+	//PLAYER,
+	//GRASS,
+	//TREE
+//} id;
 
 std::set<Entity*> changed;
 std::vector<Entity*> entities;
@@ -87,7 +81,7 @@ void Game::Initialize(int width, int height, std::string map_name)
 	lua_LoadConfig();
 
 
-	p = InitEntity(1, 1, 20);
+	p = InitEntity(1, 1, 99);
 	fEntities.push_back(p);
 	entities.push_back(p);
 
@@ -143,8 +137,7 @@ void Game::Update() {
 				e->y + e->transform.dy, // y
 				e->id, // id
 				e->prop, // prop
-				e->width, // width
-				e->height, // height
+				e->region, // region
 				e->image // image
 		};
 	}
@@ -171,19 +164,16 @@ GPU_Image* Game::LoadImage(const char* image_path){
 
 Entity* Game::InitEntity(int x, int y, int id){
 	int width, height;
-	std::string name = id_map[id];
-	
-	GPU_Image* image = asset_manager[id_map[id]];
-	width = image->base_w;
-	height = image->base_h;
+	Entity_Type *et = id_map[id];
+	std::cout << id;
+	GPU_Image* image = asset_manager[et->asset];
 
 	Entity *e = new Entity{
 		x, // x
 		y, // y
-		0, // id
-		0, // prop
-		width, // width
-		height, // height
+		id, // id
+		GetProp(et), // prop
+		et->region,
 		image
 	};
 
@@ -214,15 +204,13 @@ void Game::BlitTexture(std::vector<Entity*> eArr){
 		float y = e->y * (UNIT_HEIGHT_PADDED);
 
 		// Scale
-		float scaleW = UNIT_WIDTH / e->width;
-		float scaleH = UNIT_HEIGHT / e->height;
+		float scaleW = UNIT_WIDTH / e->region->w;
+		float scaleH = UNIT_HEIGHT / e->region->h;
 
 		// Top-left pivot offsets
 		x += UNIT_WIDTH / 2;
 		y += UNIT_HEIGHT / 2;
-
-
-		GPU_BlitTransform(e->image, NULL, screen, x, y, 0, scaleW, scaleH);
+		GPU_BlitTransform(e->image, e->region, screen, x, y, 0, scaleW, scaleH);
 	}
 }
 
@@ -251,7 +239,7 @@ void Game::Destroy() {
 
 void Game::lua_Update(){
 	// Update
-	if(CheckLua(L, luaL_dofile(L, "../scripts/entity.lua"))){
+	if(lua_Check(L, luaL_dofile(L, "../scripts/entity.lua"))){
 		lua_getglobal(L, "hello_world");
 		if(lua_isfunction(L, -1)){
 		}
@@ -260,7 +248,7 @@ void Game::lua_Update(){
 
 void Game::lua_LoadConfig(){
 	// Loading input handler
-	if(CheckLua(L, luaL_dofile(L, "../scripts/player_controller.lua"))){
+	if(lua_Check(L, luaL_dofile(L, "../scripts/player_controller.lua"))){
 		lua_getglobal(L, "input_handler");
 		if(lua_istable(L, -1)){
 			std::vector<std::string> inputs {
@@ -280,27 +268,64 @@ void Game::lua_LoadConfig(){
 }
 
 void Game::lua_LoadAssets(){
-	if(CheckLua(L, luaL_dofile(L, "../scripts/assets.lua"))){
-		lua_getglobal(L, "ids");
-		if(lua_istable(L, -1)){
-			std::vector<int> inputs {
-				20,
-				0,
-				1
-			};
-			for(int input : inputs){
-				lua_pushnumber(L, input);
-				lua_gettable(L, -2);
-				id_map[input] = lua_tostring(L, -1);
-				lua_pop(L, 1);
+	if(lua_Check(L, luaL_dofile(L, "../scripts/assets.lua"))){
+		std::vector<int> entity_ids {
+			0,
+				1,
+				2,
+				50,
+				99
+		};
+		for(int id : entity_ids){
+			lua_getglobal(L, "GetEntityType");
+			if(lua_isfunction(L, -1)){
+				lua_pushnumber(L, id);
+
+				if(lua_Check(L, lua_pcall(L, 1, 1, 0))){
+					if(lua_istable(L, -1)){
+						std::string name;
+						bool blocking;
+						std::string asset;
+						GPU_Rect* region;
+
+						name = lua_GetTableStr(L, "name");
+
+						lua_pushstring(L, "blocking");
+						lua_gettable(L, -2);
+						blocking = lua_toboolean(L, -1);
+						lua_pop(L, 1);
+
+						asset = lua_GetTableStr(L, "asset");
+
+						lua_pushstring(L, "region");
+						lua_gettable(L, -2);
+						if(lua_istable(L, -1)){
+							region = new GPU_Rect{
+								lua_GetTableNum(L, "x"),
+								lua_GetTableNum(L, "y"),
+								lua_GetTableNum(L, "width"),
+								lua_GetTableNum(L, "height")
+							};
+						}
+
+						Entity_Type *et = new Entity_Type{
+							name,
+							blocking,
+							asset,
+							region
+						};
+
+						id_map[id] = et;
+					}
+				}
 			}
 		}
 		lua_getglobal(L, "assets");
 		if(lua_istable(L, -1)){
 			std::vector<std::string> inputs {
 				"Player",
-				"Grass",
-				"Tree"
+				"Terrain_tilemap",
+				"Obj_tilemap"
 			};
 			for(std::string input : inputs){
 				lua_pushstring(L, input.c_str());
@@ -312,7 +337,25 @@ void Game::lua_LoadAssets(){
 	}
 }
 
-bool Game::CheckLua(lua_State *L, int r){
+std::string Game::lua_GetTableStr(lua_State *L, const char* property){
+	lua_pushstring(L, property);
+	lua_gettable(L, -2);
+	std::string ret = lua_tostring(L, -1);
+	lua_pop(L, 1);
+
+	return ret;
+}
+
+float Game::lua_GetTableNum(lua_State *L, const char* property){
+	lua_pushstring(L, property);
+	lua_gettable(L, -2);
+	float ret = lua_tonumber(L, -1);
+	lua_pop(L, 1);
+
+	return ret;
+}
+
+bool Game::lua_Check(lua_State *L, int r){
 	if(r != LUA_OK){
 		std::string errmsg = lua_tostring(L, -1);
 		std::cout << errmsg << std::endl;

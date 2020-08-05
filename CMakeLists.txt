@@ -79,6 +79,7 @@ if(APPLE)
 	target_link_libraries(${EXECUTABLE} ${SDL_GPU_LIBRARY})
 	target_link_libraries(${EXECUTABLE} ${LUA_LIBRARY})
 
+
 elseif(WIN32)
 	add_executable(${EXECUTABLE} WIN32 src/Main.cpp)
 
@@ -90,5 +91,9 @@ elseif(WIN32)
 	target_link_libraries(${EXECUTABLE} ${LUA_LIBRARY})
 endif()
 
-print_all_variables()
+
+# At this point build folder is prepared
+
+
+#print_all_variables()
 

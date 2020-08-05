@@ -102,8 +102,13 @@ CMakeFiles/INC.dir/src/Game.cpp.o
  ../lib/osx/SDL2.framework/Headers/SDL_video.h
  ../lib/osx/SDL2.framework/Headers/begin_code.h
  ../lib/osx/SDL2.framework/Headers/close_code.h
+ ../lib/osx/SDL2_TTF.framework/Headers/SDL_ttf.h
  ../lib/osx/SDL2_gpu.framework/Headers/SDL_gpu.h
  ../lib/osx/SDL2_gpu.framework/Headers/SDL_gpu_version.h
+ ../lib/osx/lua_5.3/include/lauxlib.h
+ ../lib/osx/lua_5.3/include/lua.h
+ ../lib/osx/lua_5.3/include/luaconf.h
+ ../lib/osx/lua_5.3/include/lualib.h
  /Users/Yawmus/projects/sdl_engine/src/Constants.h
  /Users/Yawmus/projects/sdl_engine/src/Entity.h
  /Users/Yawmus/projects/sdl_engine/src/Game.cpp
