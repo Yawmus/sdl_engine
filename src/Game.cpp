@@ -27,6 +27,7 @@ int GetProp(Entity_Type* et){
 	//TREE
 //} id;
 
+std::vector<Entity*> *grid;
 std::set<Entity*> changed;
 std::vector<Entity*> entities;
 std::vector<Entity*> fEntities;
@@ -75,11 +76,13 @@ void Game::Initialize(int width, int height, std::string map_name)
 	// Load images
 	lua_LoadAssets();
 
+
 	// If provided -- load map file
 	if(!LoadMap(map_name)){
 		std::cerr << "Unable to open map file" << std::endl;
 		return;
 	}
+
 
 	// Read in Lua config scripts
 	lua_LoadConfig();
@@ -130,11 +133,19 @@ void Game::Move(Entity *e, Transform t){
 	int dy = e->y + t.dy;
 
 	// Map bounds
-	if(dx < 0 || dy < 0 || dx >= map_width || dy >= map_height){
+	if(dx < 0 || dy < 0 || dx >= map_width - 1 || dy >= map_height - 1){
 		return;
 	}
 	
 	// Bump
+	std::vector temp = grid[dy * map_height + dx];
+	for( std::vector<Entity*>::iterator iter = temp.begin(); iter != temp.end(); ++iter )
+	{
+		if( (*iter)->prop ==  0b0001) // Blocked
+		{
+			return;
+		}
+	}
 
 	e->transform = t;
 	changed.insert(e);
@@ -147,6 +158,21 @@ void Game::Update(float delta) {
 
 	// Transform
 	for(Entity* e : changed){
+		Transform t = e->transform;
+
+		// If moved
+		if(t.dx || t.dy){
+			int dx = e->x + t.dx;
+			int dy = e->y + t.dy;
+
+			// Add it to new loc
+			grid[dy * map_height + dx].push_back(e); 
+
+			// Remove from old loc
+			std::vector<Entity*> *temp = &grid[e->y * map_height + e->x];
+			temp->erase(std::remove(temp->begin(), temp->end(), e), temp->end());
+		}
+
 		e = new (e) Entity{
 			e->x + e->transform.dx, // x
 				e->y + e->transform.dy, // y
@@ -195,6 +221,8 @@ Entity* Game::InitEntity(int x, int y, int id){
 		et->region,
 		image
 	};
+
+	grid[y * map_height + x].push_back(e);
 
 	return e;
 }
@@ -400,10 +428,35 @@ bool Game::LoadMap(std::string map_name){
 	}
 
 	std::string line;
-	map_height = 0;
-	int x = 0, y = 0;
+	int x = 1, y = 1;
 
+	entities.reserve(1000);
 	bEntities.reserve(1000);
+
+	// Do a quick pass for dimensions before reading data
+	while (std::getline(map_file, line))
+	{
+		std::istringstream iss(line);
+		int val;
+		x = 1;
+		while (iss >> val)
+		{
+			x++;
+		}
+		y++;
+	}
+	map_width = x;
+	map_height = y;
+
+	std::cout << map_width << std::endl;
+	std::cout << map_height << std::endl;
+
+	grid = new std::vector<Entity*>[map_width * map_height];
+
+	map_file.clear();
+	map_file.seekg(0, std::ios::beg);
+
+	y = 0;
 
 	while (std::getline(map_file, line))
 	{
@@ -428,10 +481,6 @@ bool Game::LoadMap(std::string map_name){
 		std::cout << std::endl;
 		y++;
 	}
-	map_width = x;
-	map_height = y;
-	std::cout << map_width << std::endl;
-	std::cout << map_height << std::endl;
 	map_file.close();
 
 	return true;
