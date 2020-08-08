@@ -14,7 +14,7 @@ TILE_SIZE = 32
 if sys.argv and len(sys.argv) > 1:
     TILE_IMAGE = pyglet.image.load('../assets/tilemaps/' + sys.argv[1] + '.png')
 else:
-    TILE_IMAGE = pyglet.image.load('../assets/tilemaps/jungle.png')
+    TILE_IMAGE = pyglet.image.load('../assets/tilemaps/terrain.png')
 
 HR_IMAGE = pyglet.image.load('./assets/images/hr.png')
 W = 25;

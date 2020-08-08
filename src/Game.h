@@ -45,6 +45,7 @@ class Game {
 		void lua_LoadConfig();
 		void lua_Update(float);
 		void lua_LoadAssets();
+		void lua_Init();
 };
 
 #endif

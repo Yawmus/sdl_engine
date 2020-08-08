@@ -65,14 +65,7 @@ void Game::Initialize(int width, int height, std::string map_name)
 	}
 
 
-	// Init lua
- 	L = luaL_newstate();
-	luaL_openlibs(L);
-
-	size_t nbytes = sizeof(Entity);
-	Entity *e = (Entity *)lua_newuserdata(L, nbytes);
- 
-
+	lua_Init();
 	// Load images
 	lua_LoadAssets();
 
@@ -95,6 +88,43 @@ void Game::Initialize(int width, int height, std::string map_name)
 	isRunning = true;
 
 	return;
+}
+
+void Game::lua_Init(){
+	// Init lua
+ 	L = luaL_newstate();
+	luaL_openlibs(L);
+
+
+	// Register cpp funcs
+	auto MoveEntity = [](lua_State* L) -> int
+	{
+		Entity* e = (Entity*) lua_touserdata(L, -1);
+		e->transform = {
+			1,
+			0
+		};
+
+		changed.insert(e);
+		return 0;
+	};
+	lua_pushcfunction(L, MoveEntity);
+	lua_setglobal(L, "MoveEntity");
+
+	auto GetEntity = [](lua_State* L) -> int
+	{
+		// Get passed idx
+		Entity* e = (Entity*) lua_touserdata(L, -1);
+		e->transform = {
+			1,
+			0
+		};
+
+		changed.insert(e);
+		return 0;
+	};
+	lua_pushcfunction(L, MoveEntity);
+	lua_setglobal(L, "MoveEntity");
 }
 
 void Game::ProcessInput(){
@@ -154,7 +184,7 @@ void Game::Move(Entity *e, Transform t){
 
 void Game::Update(float delta) {
 	// Update entities
-	//lua_Update();
+	lua_Update(delta);
 
 	// Transform
 	for(Entity* e : changed){
@@ -285,13 +315,14 @@ void Game::Destroy() {
 void Game::lua_Update(float delta){
 	// Update
 	if(lua_Check(L, luaL_dofile(L, "../scripts/entity.lua"))){
-		lua_getglobal(L, "Update");
-		if(lua_isfunction(L, -1)){
-			for(Entity* e : entities){
-				lua_pushlightuserdata(L, e);
+		int idx = 0;
+		for(Entity* e : entities){
+			lua_getglobal(L, "Update");
+			if(lua_isfunction(L, -1)){
 				lua_pushnumber(L, delta);
+				lua_pushnumber(L, idx++);
 
-				if(lua_Check(L, lua_pcall(L, 1, 1, 0))){
+				if(lua_Check(L, lua_pcall(L, 2, 1, 0))){
 				}
 			}
 		}
