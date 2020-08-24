@@ -11,6 +11,8 @@ const float UNIT_PADDING = 0;
 const float UNIT_HEIGHT_PADDED = UNIT_HEIGHT + UNIT_PADDING;
 const float UNIT_WIDTH_PADDED = UNIT_WIDTH + UNIT_PADDING;
 
+const unsigned int LUA_UPDATE_DELTA = 500;
+
 extern std::string fps;
 
 #endif

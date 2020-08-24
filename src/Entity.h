@@ -4,6 +4,7 @@
 #include <SDL_gpu.h>
 #include <string>
 
+
 struct Transform {
 	int dx;
 	int dy;

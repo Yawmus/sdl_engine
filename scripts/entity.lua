@@ -1,14 +1,15 @@
+function Start(self)
+	print("[LUA] Entity Start called")
+	print(self)
+end
 
 function Update (delta, idx)
-	--print("[LUA] Update" .. idx)
+	print("[LUA] Update" .. idx)
+
+	--x = GetEntity(idx);
+
+	
 
 	--MoveEntity(e);
-
-	return e
 end
 
-function Create (x, y, id)
-	print("[LUA] Creaing entity")
-
-	return e
-end

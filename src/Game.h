@@ -13,6 +13,9 @@ extern "C"{
 #include "lauxlib.h"
 }
 
+#define ASSET_TYPE std::unordered_map<std::string, GPU_Image*>
+#define ID_TYPE std::unordered_map<int, Entity_Type*>
+
 
 
 class Game {
@@ -21,8 +24,8 @@ class Game {
 		GPU_Target *screen;
 		lua_State * L;
 		std::unordered_map<std::string, char> input_handler;
-		std::unordered_map<std::string, GPU_Image*> asset_manager;
-		std::unordered_map<int, Entity_Type*> id_map;
+		ASSET_TYPE asset_manager;
+		ID_TYPE id_map;
 
     public:
 		Game();
@@ -30,7 +33,7 @@ class Game {
 		bool IsRunning() const;
 		void Initialize(int width, int height, std::string map);
 		void ProcessInput();
-		void Update(float);
+		void Update(int);
 		void Move(Entity*, Transform);
 		Entity* InitEntity(int, int, int);
 		void Render();
@@ -42,9 +45,8 @@ class Game {
 		std::string lua_GetTableStr(lua_State*, const char*);
 		lua_Number lua_GetTableNum(lua_State*, const char*);
 		bool lua_Check(lua_State*, int);
-		void lua_LoadConfig();
+		bool lua_DefineMetaTables();
 		void lua_Update(float);
-		void lua_LoadAssets();
 		void lua_Init();
 };
 
