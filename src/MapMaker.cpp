@@ -9,6 +9,8 @@ void MapMaker::Initialize(GPU_Target *screen, std::string file_name)
 	this->screen = screen;
 
 	canvas = new UI_Canvas();
+	canvas->UpdateLabel(70, WINDOW_HEIGHT - 20, "Map maker", "title", C_WHITE, "md");
+	canvas->UpdateLabel(210, WINDOW_HEIGHT - 18, VERSION.c_str(), "version", C_WHITE, "sm");
 
 	//if(!LoadMap(file_name)){
 		//std::cerr << "Unable to open map file" << std::endl;
@@ -53,7 +55,13 @@ void MapMaker::Update(int delta) {
 }
 
 void MapMaker::Render() {
-	GPU_ClearRGB(screen, 0, 200, 100);
+	GPU_ClearRGB(screen, 100, 0, 120);
+
+	// Draw grid outline (batch primitives?)
+	//GPU_RectangleFilled2 (screen, rect, C_RED);
+
+
+	canvas->Render(screen);
 	GPU_Flip(screen);
 }
 

@@ -1151,6 +1151,8 @@ string
 -
 SDL.h
 -
+SDL_ttf.h
+-
 
 /Users/Yawmus/projects/sdl_engine/src/Entity.h
 SDL_gpu.h
@@ -1181,6 +1183,8 @@ Entity.h
 /Users/Yawmus/projects/sdl_engine/src/Entity.h
 UI_Canvas.h
 /Users/Yawmus/projects/sdl_engine/src/UI_Canvas.h
+Constants.h
+/Users/Yawmus/projects/sdl_engine/src/Constants.h
 lua.h
 /Users/Yawmus/projects/sdl_engine/src/lua.h
 lualib.h
@@ -1207,4 +1211,6 @@ string
 -
 unordered_map
 -
+Constants.h
+/Users/Yawmus/projects/sdl_engine/src/Constants.h
 

@@ -6,6 +6,7 @@
 
 #include <string>
 #include <unordered_map>
+#include "Constants.h"
 
 struct UI_Element{
 	int x;
@@ -16,14 +17,14 @@ struct UI_Element{
 
 class UI_Canvas {
 	private:
-	TTF_Font * font;
 	std::unordered_map<std::string, UI_Element> labels;
+	std::unordered_map<std::string, TTF_Font*> fonts;
 
 	public:
 	UI_Canvas();
 	~UI_Canvas();
 	void Render(GPU_Target*);
-	void UpdateLabel(int, int, const char*, const char*, SDL_Color);
+	void UpdateLabel(int, int, const char*, const char*, SDL_Color, const char*);
 	std::unordered_map<std::string, UI_Element> GetLabels();
 };
 

@@ -8,6 +8,7 @@
 #include <unordered_map> 
 #include "Entity.h"
 #include "UI_Canvas.h"
+#include "Constants.h"
 
 extern "C"{
 #include "lua.h"

@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Constants.h"
 #include "Game.h"
 #include "Entity.h"
 #include <SDL.h>
@@ -47,7 +46,6 @@ void Game::Clear(){
 	lua_entities.clear();
 
 	delete[] grid;
-	canvas->GetLabels().clear();
 }
 
 Game::Game() {
@@ -68,6 +66,8 @@ void Game::Initialize(GPU_Target *screen, std::string file_name)
 
 
 	canvas = new UI_Canvas();
+	canvas->UpdateLabel(40, WINDOW_HEIGHT - 20, "Game", "title", C_WHITE, "md");
+	canvas->UpdateLabel(210, WINDOW_HEIGHT - 18, VERSION.c_str(), "version", C_WHITE, "sm");
 
 	// Init lua, load assets and load config scripts
 	lua_Init();
@@ -297,15 +297,15 @@ void Game::ProcessInput(){
 			}
 			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_3) {
 				SaveState();
-				int x = 50;
+				int x = WINDOW_WIDTH / 2 - 20;
 				int y = WINDOW_HEIGHT - 30;
-				canvas->UpdateLabel(x, y, "Saved", "status", C_GREEN);
+				canvas->UpdateLabel(x, y, "Saved", "status", C_GREEN, "md");
 			}
 			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_4) {
 				LoadState("data.json");
-				int x = 50;
+				int x = WINDOW_WIDTH / 2 - 20;
 				int y = WINDOW_HEIGHT - 30;
-				canvas->UpdateLabel(x, y, "Loaded", "status", C_WHITE);
+				canvas->UpdateLabel(x, y, "Loaded", "status", C_WHITE, "md");
 			}
 			else if(event.key.keysym.sym == input_handler["Left"]) {
 				Move(p, { -1, 0 });
@@ -393,7 +393,7 @@ void Game::Update(int delta) {
 	// Update UI
 	int x = WINDOW_WIDTH - 50;
 	int y = WINDOW_HEIGHT - 30;
-	canvas->UpdateLabel(x, y, fps.c_str(), "fps", C_WHITE);
+	canvas->UpdateLabel(x, y, fps.c_str(), "fps", C_WHITE, "lg");
 }
 
 GPU_Image* Game::LoadImage(const char* image_path){
@@ -467,8 +467,8 @@ void Game::BlitTexture(std::vector<Entity*> eArr){
 	for(Entity* e : eArr)
 	{
 		// Offset
-		float offX = 60;
-		float offY = 80;
+		float offX = 120;
+		float offY = 50;
 
 		// Adjust to unit size
 		float x = e->x * (UNIT_WIDTH_PADDED) + offX;

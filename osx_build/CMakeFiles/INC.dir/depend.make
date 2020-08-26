@@ -88,6 +88,7 @@ CMakeFiles/INC.dir/src/Entity.cpp.o: ../lib/osx/SDL2.framework/Headers/SDL_versi
 CMakeFiles/INC.dir/src/Entity.cpp.o: ../lib/osx/SDL2.framework/Headers/SDL_video.h
 CMakeFiles/INC.dir/src/Entity.cpp.o: ../lib/osx/SDL2.framework/Headers/begin_code.h
 CMakeFiles/INC.dir/src/Entity.cpp.o: ../lib/osx/SDL2.framework/Headers/close_code.h
+CMakeFiles/INC.dir/src/Entity.cpp.o: ../lib/osx/SDL2_TTF.framework/Headers/SDL_ttf.h
 CMakeFiles/INC.dir/src/Entity.cpp.o: ../lib/osx/SDL2_gpu.framework/Headers/SDL_gpu.h
 CMakeFiles/INC.dir/src/Entity.cpp.o: ../lib/osx/SDL2_gpu.framework/Headers/SDL_gpu_version.h
 CMakeFiles/INC.dir/src/Entity.cpp.o: ../src/Constants.h
@@ -356,6 +357,7 @@ CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../lib/osx/SDL2.framework/Headers/close_
 CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../lib/osx/SDL2_TTF.framework/Headers/SDL_ttf.h
 CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../lib/osx/SDL2_gpu.framework/Headers/SDL_gpu.h
 CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../lib/osx/SDL2_gpu.framework/Headers/SDL_gpu_version.h
+CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../src/Constants.h
 CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../src/UI_Canvas.cpp
 CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../src/UI_Canvas.h
 
