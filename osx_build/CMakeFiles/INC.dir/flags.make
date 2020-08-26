@@ -6,5 +6,5 @@ CXX_FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sd
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/Yawmus/projects/sdl_engine/start -I/Users/Yawmus/projects/sdl_engine/lib/osx/SDL2.framework/Headers -I/Users/Yawmus/projects/sdl_engine/lib/osx/SDL2_TTF.framework/Headers -I/Users/Yawmus/projects/sdl_engine/lib/osx/SDL2_gpu.framework/Headers -I/Users/Yawmus/projects/sdl_engine/lib/osx/lua_5.3/include 
+CXX_INCLUDES = -I/Users/Yawmus/projects/sdl_engine/start -I/Users/Yawmus/projects/sdl_engine/include -I/Users/Yawmus/projects/sdl_engine/lib/osx/SDL2.framework/Headers -I/Users/Yawmus/projects/sdl_engine/lib/osx/SDL2_TTF.framework/Headers -I/Users/Yawmus/projects/sdl_engine/lib/osx/SDL2_gpu.framework/Headers -I/Users/Yawmus/projects/sdl_engine/lib/osx/lua_5.3/include 
 

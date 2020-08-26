@@ -237,6 +237,60 @@ src/Main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/start.dir/build.make CMakeFiles/start.dir/src/Main.cpp.s
 .PHONY : src/Main.cpp.s
 
+src/MapMaker.o: src/MapMaker.cpp.o
+
+.PHONY : src/MapMaker.o
+
+# target to build an object file
+src/MapMaker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/MapMaker.cpp.o
+.PHONY : src/MapMaker.cpp.o
+
+src/MapMaker.i: src/MapMaker.cpp.i
+
+.PHONY : src/MapMaker.i
+
+# target to preprocess a source file
+src/MapMaker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/MapMaker.cpp.i
+.PHONY : src/MapMaker.cpp.i
+
+src/MapMaker.s: src/MapMaker.cpp.s
+
+.PHONY : src/MapMaker.s
+
+# target to generate assembly for a file
+src/MapMaker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/MapMaker.cpp.s
+.PHONY : src/MapMaker.cpp.s
+
+src/UI_Canvas.o: src/UI_Canvas.cpp.o
+
+.PHONY : src/UI_Canvas.o
+
+# target to build an object file
+src/UI_Canvas.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/UI_Canvas.cpp.o
+.PHONY : src/UI_Canvas.cpp.o
+
+src/UI_Canvas.i: src/UI_Canvas.cpp.i
+
+.PHONY : src/UI_Canvas.i
+
+# target to preprocess a source file
+src/UI_Canvas.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/UI_Canvas.cpp.i
+.PHONY : src/UI_Canvas.cpp.i
+
+src/UI_Canvas.s: src/UI_Canvas.cpp.s
+
+.PHONY : src/UI_Canvas.s
+
+# target to generate assembly for a file
+src/UI_Canvas.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/UI_Canvas.cpp.s
+.PHONY : src/UI_Canvas.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -256,6 +310,12 @@ help:
 	@echo "... src/Main.o"
 	@echo "... src/Main.i"
 	@echo "... src/Main.s"
+	@echo "... src/MapMaker.o"
+	@echo "... src/MapMaker.i"
+	@echo "... src/MapMaker.s"
+	@echo "... src/UI_Canvas.o"
+	@echo "... src/UI_Canvas.i"
+	@echo "... src/UI_Canvas.s"
 .PHONY : help
 
 

@@ -103,19 +103,49 @@ CMakeFiles/INC.dir/src/Game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/INC.dir/src/Game.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Yawmus/projects/sdl_engine/src/Game.cpp -o CMakeFiles/INC.dir/src/Game.cpp.s
 
+CMakeFiles/INC.dir/src/MapMaker.cpp.o: CMakeFiles/INC.dir/flags.make
+CMakeFiles/INC.dir/src/MapMaker.cpp.o: ../src/MapMaker.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/INC.dir/src/MapMaker.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/INC.dir/src/MapMaker.cpp.o -c /Users/Yawmus/projects/sdl_engine/src/MapMaker.cpp
+
+CMakeFiles/INC.dir/src/MapMaker.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/INC.dir/src/MapMaker.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Yawmus/projects/sdl_engine/src/MapMaker.cpp > CMakeFiles/INC.dir/src/MapMaker.cpp.i
+
+CMakeFiles/INC.dir/src/MapMaker.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/INC.dir/src/MapMaker.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Yawmus/projects/sdl_engine/src/MapMaker.cpp -o CMakeFiles/INC.dir/src/MapMaker.cpp.s
+
+CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: CMakeFiles/INC.dir/flags.make
+CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../src/UI_Canvas.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/INC.dir/src/UI_Canvas.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/INC.dir/src/UI_Canvas.cpp.o -c /Users/Yawmus/projects/sdl_engine/src/UI_Canvas.cpp
+
+CMakeFiles/INC.dir/src/UI_Canvas.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/INC.dir/src/UI_Canvas.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Yawmus/projects/sdl_engine/src/UI_Canvas.cpp > CMakeFiles/INC.dir/src/UI_Canvas.cpp.i
+
+CMakeFiles/INC.dir/src/UI_Canvas.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/INC.dir/src/UI_Canvas.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Yawmus/projects/sdl_engine/src/UI_Canvas.cpp -o CMakeFiles/INC.dir/src/UI_Canvas.cpp.s
+
 # Object files for target INC
 INC_OBJECTS = \
 "CMakeFiles/INC.dir/src/Entity.cpp.o" \
-"CMakeFiles/INC.dir/src/Game.cpp.o"
+"CMakeFiles/INC.dir/src/Game.cpp.o" \
+"CMakeFiles/INC.dir/src/MapMaker.cpp.o" \
+"CMakeFiles/INC.dir/src/UI_Canvas.cpp.o"
 
 # External object files for target INC
 INC_EXTERNAL_OBJECTS =
 
 libINC.a: CMakeFiles/INC.dir/src/Entity.cpp.o
 libINC.a: CMakeFiles/INC.dir/src/Game.cpp.o
+libINC.a: CMakeFiles/INC.dir/src/MapMaker.cpp.o
+libINC.a: CMakeFiles/INC.dir/src/UI_Canvas.cpp.o
 libINC.a: CMakeFiles/INC.dir/build.make
 libINC.a: CMakeFiles/INC.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libINC.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libINC.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/INC.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/INC.dir/link.txt --verbose=$(VERBOSE)
 
