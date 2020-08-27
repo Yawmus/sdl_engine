@@ -102,8 +102,10 @@ CMakeFiles/start.dir/src/Main.cpp.o
  ../lib/osx/lua_5.3/include/lua.h
  ../lib/osx/lua_5.3/include/luaconf.h
  ../lib/osx/lua_5.3/include/lualib.h
+ /Users/Yawmus/projects/sdl_engine/src/AssetManager.h
  /Users/Yawmus/projects/sdl_engine/src/Constants.h
  /Users/Yawmus/projects/sdl_engine/src/Entity.h
+ /Users/Yawmus/projects/sdl_engine/src/EntityManager.h
  /Users/Yawmus/projects/sdl_engine/src/Game.h
  /Users/Yawmus/projects/sdl_engine/src/Main.cpp
  /Users/Yawmus/projects/sdl_engine/src/MapMaker.h

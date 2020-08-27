@@ -101,8 +101,10 @@ CMakeFiles/start.dir/src/Main.cpp.o: ../lib/osx/lua_5.3/include/lauxlib.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../lib/osx/lua_5.3/include/lua.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../lib/osx/lua_5.3/include/luaconf.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../lib/osx/lua_5.3/include/lualib.h
+CMakeFiles/start.dir/src/Main.cpp.o: ../src/AssetManager.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/Constants.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/Entity.h
+CMakeFiles/start.dir/src/Main.cpp.o: ../src/EntityManager.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/Game.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/Main.cpp
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/MapMaker.h

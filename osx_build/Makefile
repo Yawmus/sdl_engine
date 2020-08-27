@@ -156,6 +156,33 @@ INC/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/build
 .PHONY : INC/fast
 
+src/AssetManager.o: src/AssetManager.cpp.o
+
+.PHONY : src/AssetManager.o
+
+# target to build an object file
+src/AssetManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/AssetManager.cpp.o
+.PHONY : src/AssetManager.cpp.o
+
+src/AssetManager.i: src/AssetManager.cpp.i
+
+.PHONY : src/AssetManager.i
+
+# target to preprocess a source file
+src/AssetManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/AssetManager.cpp.i
+.PHONY : src/AssetManager.cpp.i
+
+src/AssetManager.s: src/AssetManager.cpp.s
+
+.PHONY : src/AssetManager.s
+
+# target to generate assembly for a file
+src/AssetManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/AssetManager.cpp.s
+.PHONY : src/AssetManager.cpp.s
+
 src/Entity.o: src/Entity.cpp.o
 
 .PHONY : src/Entity.o
@@ -182,6 +209,33 @@ src/Entity.s: src/Entity.cpp.s
 src/Entity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/Entity.cpp.s
 .PHONY : src/Entity.cpp.s
+
+src/EntityManager.o: src/EntityManager.cpp.o
+
+.PHONY : src/EntityManager.o
+
+# target to build an object file
+src/EntityManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/EntityManager.cpp.o
+.PHONY : src/EntityManager.cpp.o
+
+src/EntityManager.i: src/EntityManager.cpp.i
+
+.PHONY : src/EntityManager.i
+
+# target to preprocess a source file
+src/EntityManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/EntityManager.cpp.i
+.PHONY : src/EntityManager.cpp.i
+
+src/EntityManager.s: src/EntityManager.cpp.s
+
+.PHONY : src/EntityManager.s
+
+# target to generate assembly for a file
+src/EntityManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/INC.dir/build.make CMakeFiles/INC.dir/src/EntityManager.cpp.s
+.PHONY : src/EntityManager.cpp.s
 
 src/Game.o: src/Game.cpp.o
 
@@ -301,9 +355,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... INC"
 	@echo "... start"
+	@echo "... src/AssetManager.o"
+	@echo "... src/AssetManager.i"
+	@echo "... src/AssetManager.s"
 	@echo "... src/Entity.o"
 	@echo "... src/Entity.i"
 	@echo "... src/Entity.s"
+	@echo "... src/EntityManager.o"
+	@echo "... src/EntityManager.i"
+	@echo "... src/EntityManager.s"
 	@echo "... src/Game.o"
 	@echo "... src/Game.i"
 	@echo "... src/Game.s"

@@ -129,12 +129,40 @@ CMakeFiles/INC.dir/src/UI_Canvas.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/INC.dir/src/UI_Canvas.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Yawmus/projects/sdl_engine/src/UI_Canvas.cpp -o CMakeFiles/INC.dir/src/UI_Canvas.cpp.s
 
+CMakeFiles/INC.dir/src/EntityManager.cpp.o: CMakeFiles/INC.dir/flags.make
+CMakeFiles/INC.dir/src/EntityManager.cpp.o: ../src/EntityManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/INC.dir/src/EntityManager.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/INC.dir/src/EntityManager.cpp.o -c /Users/Yawmus/projects/sdl_engine/src/EntityManager.cpp
+
+CMakeFiles/INC.dir/src/EntityManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/INC.dir/src/EntityManager.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Yawmus/projects/sdl_engine/src/EntityManager.cpp > CMakeFiles/INC.dir/src/EntityManager.cpp.i
+
+CMakeFiles/INC.dir/src/EntityManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/INC.dir/src/EntityManager.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Yawmus/projects/sdl_engine/src/EntityManager.cpp -o CMakeFiles/INC.dir/src/EntityManager.cpp.s
+
+CMakeFiles/INC.dir/src/AssetManager.cpp.o: CMakeFiles/INC.dir/flags.make
+CMakeFiles/INC.dir/src/AssetManager.cpp.o: ../src/AssetManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/INC.dir/src/AssetManager.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/INC.dir/src/AssetManager.cpp.o -c /Users/Yawmus/projects/sdl_engine/src/AssetManager.cpp
+
+CMakeFiles/INC.dir/src/AssetManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/INC.dir/src/AssetManager.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Yawmus/projects/sdl_engine/src/AssetManager.cpp > CMakeFiles/INC.dir/src/AssetManager.cpp.i
+
+CMakeFiles/INC.dir/src/AssetManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/INC.dir/src/AssetManager.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Yawmus/projects/sdl_engine/src/AssetManager.cpp -o CMakeFiles/INC.dir/src/AssetManager.cpp.s
+
 # Object files for target INC
 INC_OBJECTS = \
 "CMakeFiles/INC.dir/src/Entity.cpp.o" \
 "CMakeFiles/INC.dir/src/Game.cpp.o" \
 "CMakeFiles/INC.dir/src/MapMaker.cpp.o" \
-"CMakeFiles/INC.dir/src/UI_Canvas.cpp.o"
+"CMakeFiles/INC.dir/src/UI_Canvas.cpp.o" \
+"CMakeFiles/INC.dir/src/EntityManager.cpp.o" \
+"CMakeFiles/INC.dir/src/AssetManager.cpp.o"
 
 # External object files for target INC
 INC_EXTERNAL_OBJECTS =
@@ -143,9 +171,11 @@ libINC.a: CMakeFiles/INC.dir/src/Entity.cpp.o
 libINC.a: CMakeFiles/INC.dir/src/Game.cpp.o
 libINC.a: CMakeFiles/INC.dir/src/MapMaker.cpp.o
 libINC.a: CMakeFiles/INC.dir/src/UI_Canvas.cpp.o
+libINC.a: CMakeFiles/INC.dir/src/EntityManager.cpp.o
+libINC.a: CMakeFiles/INC.dir/src/AssetManager.cpp.o
 libINC.a: CMakeFiles/INC.dir/build.make
 libINC.a: CMakeFiles/INC.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libINC.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library libINC.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/INC.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/INC.dir/link.txt --verbose=$(VERBOSE)
 

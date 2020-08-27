@@ -4,7 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/Yawmus/projects/sdl_engine/src/AssetManager.cpp" "/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/INC.dir/src/AssetManager.cpp.o"
   "/Users/Yawmus/projects/sdl_engine/src/Entity.cpp" "/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/INC.dir/src/Entity.cpp.o"
+  "/Users/Yawmus/projects/sdl_engine/src/EntityManager.cpp" "/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/INC.dir/src/EntityManager.cpp.o"
   "/Users/Yawmus/projects/sdl_engine/src/Game.cpp" "/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/INC.dir/src/Game.cpp.o"
   "/Users/Yawmus/projects/sdl_engine/src/MapMaker.cpp" "/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/INC.dir/src/MapMaker.cpp.o"
   "/Users/Yawmus/projects/sdl_engine/src/UI_Canvas.cpp" "/Users/Yawmus/projects/sdl_engine/osx_build/CMakeFiles/INC.dir/src/UI_Canvas.cpp.o"

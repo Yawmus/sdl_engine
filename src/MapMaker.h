@@ -9,12 +9,9 @@
 #include "Entity.h"
 #include "UI_Canvas.h"
 #include "Constants.h"
-
-extern "C"{
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
+#include "Helper.h"
+#include "AssetManager.h"
+#include "EntityManager.h"
 
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/json.hpp>
@@ -28,16 +25,18 @@ extern "C"{
 
 class MapMaker {
     private:
-		std::vector<Entity> bEntities;
-		std::vector<Entity> fEntities;
+		std::vector<Entity*>* bEntities;
+		std::vector<Entity*>* fEntities;
+		GRID_TYPE *grid;
 
 		UI_Canvas *canvas;
 		bool isRunning;
 		GPU_Target *screen;
-		lua_State * L;
 		std::vector<GPU_Rect*> palatte;
-		ASSET_TYPE asset_manager;
-		ID_TYPE id_map;
+		AssetManager asset_manager;
+		EntityManager entity_manager;
+		lua_State * L;
+		int map_width, map_height;
 
     public:
 		MapMaker();
@@ -47,8 +46,6 @@ class MapMaker {
 		void ProcessInput();
 		void Update(int);
 		void Render();
-		void BlitTexture(std::vector<Entity*>);
-		GPU_Image* LoadImage(const char*);
 		void Destroy();
 		//bool SaveState();
 		//bool LoadState(std::string state);

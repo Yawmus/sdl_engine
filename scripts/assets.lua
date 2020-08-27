@@ -1,5 +1,16 @@
 ids = {}
 
+ids[100] = {
+	name = "Unknown",
+	blocking = false,
+	asset = "Unknown",
+	region = {
+		x = 0,
+		y = 0,
+		width = 32,
+		height = 32
+	}
+}
 ids[99] = {
 	name = "Player",
 	blocking = true,
@@ -74,6 +85,7 @@ ids[50] = {
 
 assets = {}
 
+assets["Unknown"] = "../assets/images/unknown.png"
 assets["Monster"] = "../assets/images/test3.png"
 assets["Player"] = "../assets/images/test2.png"
 assets["Terrain_tilemap"] = "../assets/tilemaps/terrain.png"

@@ -5,8 +5,10 @@
 #include <string>
 #include <cereal/archives/json.hpp>
 
-#include "Constants.h"
-
+enum Z_INDEX {
+	BACKGROUND = 0,
+	FOREGROUND = 1
+};
 
 struct Transform {
 	int dx;

@@ -9,16 +9,7 @@
 #include <algorithm>
 
 int map_width, map_height;
-static int numLuaEntities = 0;
 
-int GetProp(Entity_Type* et){
-	int prop = 0;
-	if(et->blocking){
-		prop += 0b0001; // Blocked
-	}
-
-	return prop;
-}
 
 
 //enum Ids {
@@ -30,25 +21,7 @@ int GetProp(Entity_Type* et){
 
 Entity *p;
 
-void Game::Alloc(){
-	// Alloc mem
-	entities.reserve(1000);
-	lua_entities.reserve(50);
-	fEntities.reserve(50);
-	bEntities.reserve(1000);
-}
-
-void Game::Clear(){
-	// Destroy existing
-	entities.clear();
-	bEntities.clear();
-	fEntities.clear();
-	lua_entities.clear();
-
-	delete[] grid;
-}
-
-Game::Game() {
+Game::Game() : entity_manager(&asset_manager){
 	this->isRunning = false;
 }
 
@@ -71,8 +44,12 @@ void Game::Initialize(GPU_Target *screen, std::string file_name)
 
 	// Init lua, load assets and load config scripts
 	lua_Init();
+	asset_manager.LoadAssets(L);
 
-	Alloc();
+	// Init entity manager
+	entity_manager.Alloc();
+	fEntities = entity_manager.GetEntities(Z_INDEX::FOREGROUND);
+	bEntities = entity_manager.GetEntities(Z_INDEX::BACKGROUND);
 
 
 	if(!lua_DefineMetaTables()){
@@ -90,10 +67,12 @@ void Game::Initialize(GPU_Target *screen, std::string file_name)
 	}
 	// If provided -- load map file
 	else{
-		if(!LoadMap(file_name)){
+		grid = LoadMap(L, file_name, map_width, map_height, &entity_manager);
+		if(grid == 0){
 			std::cerr << "Unable to open map file" << std::endl;
 			return;
 		}
+		p = entity_manager.GetPlayer();
 	}
 
 
@@ -112,7 +91,7 @@ bool Game::SaveState(){
 
 		archive(cereal::make_nvp("width", map_width));
 		archive(cereal::make_nvp("height", map_height));
-		archive(cereal::make_nvp("entities", entities));
+		archive(cereal::make_nvp("entities", *entities));
 
 		// Move lua_entities into a save-able stack format
 		std::vector<Entity> raw_lua;
@@ -127,7 +106,8 @@ bool Game::SaveState(){
 }
 
 bool Game::LoadState(std::string path){
-	Clear();
+	delete[] grid;
+	entity_manager.Clear();
 	
 	std::vector<Entity> raw_entities; // Used to re-create entities list
 	// using InitEntity
@@ -144,11 +124,10 @@ bool Game::LoadState(std::string path){
 
 	grid = new std::vector<Entity*>[map_width * map_height];
 
-	Alloc();
-
 	for(int i=0; i<raw_entities.size(); i++){
 		Entity raw_e = raw_entities[i];
-		Entity *e = InitEntity(raw_e.x, raw_e.y, raw_e.id, raw_e.z_index);
+		Entity *e = entity_manager.InitEntity(raw_e.x, raw_e.y, raw_e.id, raw_e.z_index);
+		grid[raw_e.y * map_height + raw_e.x].push_back(e);
 
 		if(e->id == 99) /* Player */
 		{
@@ -178,81 +157,6 @@ void Game::lua_Init(){
 	// Init lua
  	L = luaL_newstate();
 	luaL_openlibs(L);
-
-	if(lua_Check(L, luaL_dofile(L, "../scripts/assets.lua"))){
-		std::vector<int> entity_ids {
-			0,
-				1,
-				2,
-				50,
-				98,
-				99
-		};
-		for(int id : entity_ids){
-			lua_getglobal(L, "GetEntityType");
-			if(lua_isfunction(L, -1)){
-				lua_pushnumber(L, id);
-
-				if(lua_Check(L, lua_pcall(L, 1, 1, 0))){
-					if(lua_istable(L, -1)){
-						std::string name;
-						bool blocking;
-						std::string asset;
-						GPU_Rect* region;
-
-						name = lua_GetTableStr(L, "name");
-
-						lua_pushstring(L, "blocking");
-						lua_gettable(L, -2);
-						blocking = lua_toboolean(L, -1);
-						lua_pop(L, 1);
-
-						asset = lua_GetTableStr(L, "asset");
-
-						lua_pushstring(L, "region");
-						lua_gettable(L, -2);
-						if(lua_istable(L, -1)){
-							region = new GPU_Rect{
-								(float)lua_GetTableNum(L, "x"),
-								(float)lua_GetTableNum(L, "y"),
-								(float)lua_GetTableNum(L, "width"),
-								(float)lua_GetTableNum(L, "height")
-							};
-							lua_pop(L, 1);
-						}
-
-						Entity_Type *et = new Entity_Type{
-							name,
-							blocking,
-							asset,
-							region
-						};
-
-						id_map[id] = et;
-						lua_pop(L, 1); // Remove table from stack
-					}
-				}
-			}
-		} 
-		//std::cout << "Start\n";
-		//lua_printstack(L);
-		lua_getglobal(L, "assets");
-		if(lua_istable(L, -1)){
-			std::vector<std::string> inputs {
-				"Player",
-				"Monster",
-				"Terrain_tilemap",
-				"Obj_tilemap"
-			};
-			for(std::string input : inputs){
-				lua_pushstring(L, input.c_str());
-				lua_gettable(L, -2);
-				asset_manager[input] = LoadImage(lua_tostring(L, -1));
-				lua_pop(L, 1);
-			}
-			lua_pop(L, 1);
-		}
-	}
 
 	// Loading input handler
 	if(lua_Check(L, luaL_dofile(L, "../scripts/player_controller.lua"))){
@@ -351,7 +255,7 @@ void Game::Update(int delta) {
 			int dy = e->y + t.dy;
 
 			// Map bounds
-			if(dx < 0 || dy < 0 || dx >= map_width - 1 || dy >= map_height - 1){
+			if(dx < 0 || dy < 0 || dx > map_width - 1 || dy > map_height - 1){
 				continue;
 			}
 
@@ -396,62 +300,14 @@ void Game::Update(int delta) {
 	canvas->UpdateLabel(x, y, fps.c_str(), "fps", C_WHITE, "lg");
 }
 
-GPU_Image* Game::LoadImage(const char* image_path){
-	GPU_Image* image = GPU_LoadImage(image_path);
-	if(image == NULL)
-	{
-		std::cerr << "Failed to load image: " << image_path << std::endl;
-	}
-	else{
-		image->use_blending = false; // Opaque
-	}
-	return image;
-}
-
-Entity* Game::InitEntity(int x, int y, int id, Z_INDEX z_index){
-	if(id_map.find(id) == id_map.end())
-	{
-		std::cerr << "Failed to find id: " << id << std::endl;
-		return NULL;
-	}
-	Entity_Type *et = id_map[id];
-	GPU_Image* image = asset_manager[et->asset];
-
-	entities.push_back(Entity{
-		x, // x
-		y, // y
-		id, // id
-		GetProp(et), // prop
-		et->region,
-		image,
-		z_index,
-		LUA_NOREF // Not lua-managed
-	});
-
-	Entity *e = &entities.back();
-
-	if(z_index == Z_INDEX::BACKGROUND){
-		bEntities.push_back(e);
-	}
-	else if(z_index == Z_INDEX::FOREGROUND){
-		fEntities.push_back(e);
-	}
-
-	
-	grid[y * map_height + x].push_back(&entities.back());
-
-	return e;
-}
-
-
 void Game::Render() {
 	// Erase
 	//GPU_Clear(screen);
 	GPU_ClearRGB(screen, 200, 100, 0);
 
 	// Draw game elements
-	BlitTexture(bEntities);
-	BlitTexture(fEntities);
+	BlitTexture(screen, *bEntities);
+	BlitTexture(screen, *fEntities);
 
 	// Draw UI
 	canvas->Render(screen);
@@ -459,38 +315,9 @@ void Game::Render() {
 	GPU_Flip(screen);
 }
 
-void Game::BlitTexture(std::vector<Entity*> eArr){
-	GPU_Rect rect = {
-		5, 5, 5, 5
-	};
-	GPU_Rectangle2 (screen, rect, C_WHITE);
-	for(Entity* e : eArr)
-	{
-		// Offset
-		float offX = 120;
-		float offY = 50;
-
-		// Adjust to unit size
-		float x = e->x * (UNIT_WIDTH_PADDED) + offX;
-		float y = e->y * (UNIT_HEIGHT_PADDED) + offY;
-
-		// Scale
-		float scaleW = UNIT_WIDTH / e->region->w;
-		float scaleH = UNIT_HEIGHT / e->region->h;
-
-		// Top-left pivot offsets
-		x += UNIT_WIDTH / 2;
-		y += UNIT_HEIGHT / 2;
-		GPU_BlitTransform(e->image, e->region, screen, x, y, 0, scaleW, scaleH);
-	}
-}
 
 void Game::Destroy() {
-	for(auto const& itr : asset_manager){
-		GPU_FreeImage(itr.second);
-	}
-
-	Clear();
+	delete[] grid;
 	delete canvas;
 }
 
@@ -626,8 +453,7 @@ bool Game::lua_DefineMetaTables(){
 		std::vector<Entity*> *lua_entities = (std::vector<Entity*>*)lua_touserdata(L, lua_upvalueindex(1));
 		std::vector<Entity*> *fEntities = (std::vector<Entity*>*)lua_touserdata(L, lua_upvalueindex(2));
 		GRID_TYPE *grid = *(GRID_TYPE**)lua_touserdata(L, lua_upvalueindex(3));
-		ASSET_TYPE* asset_manager = (ASSET_TYPE*)lua_touserdata(L, lua_upvalueindex(4));
-		ID_TYPE* id_map = (ID_TYPE*)lua_touserdata(L, lua_upvalueindex(5));
+		AssetManager* asset_manager = (AssetManager*)lua_touserdata(L, lua_upvalueindex(4));
 
 		int x = (int)lua_tonumber(L, -3);
 		int y = (int)lua_tonumber(L, -2);
@@ -637,7 +463,7 @@ bool Game::lua_DefineMetaTables(){
 		std::cout << "x:" << x << ", y:" << y << ", id:" << id << std::endl;
 
 		// Ensure it's within bounds
-		if(x < 0 || y < 0 || x >= map_width - 1 || y >= map_height - 1){
+		if(x < 0 || y < 0 || x > map_width - 1 || y > map_height - 1){
 			luaL_error(L, "Failed to create -- out of map bounds");
 			return 1;
 		}
@@ -661,12 +487,8 @@ bool Game::lua_DefineMetaTables(){
 
 		int userDataRef = LUA_NOREF; // Used to start C++ ref to userdata
 
-		if(id_map->find(id) == id_map->end())
-		{
-			std::cerr << "[C++] Failed to find id: " << id << std::endl;
-		}
-		Entity_Type *et = (*id_map)[id];
-		GPU_Image* image = (*asset_manager)[et->asset];
+		Entity_Type *et = asset_manager->GetEntityType(id);
+		GPU_Image* image = asset_manager->GetAsset(et->asset);
 
 		e->x = x;
 		e->y = y;
@@ -721,11 +543,10 @@ bool Game::lua_DefineMetaTables(){
 	//}
 
 	lua_pushlightuserdata(L, &lua_entities);
-	lua_pushlightuserdata(L, &fEntities);
+	lua_pushlightuserdata(L, fEntities);
 	lua_pushlightuserdata(L, &grid);
 	lua_pushlightuserdata(L, &asset_manager);
-	lua_pushlightuserdata(L, &id_map);
-	lua_pushcclosure(L, lua_InitEntity, 5);
+	lua_pushcclosure(L, lua_InitEntity, 4);
 	lua_setfield(L, -2, "Create");
 
 	lua_pushlightuserdata(L, &changed);
@@ -746,7 +567,7 @@ bool Game::lua_DefineMetaTables(){
 	luaL_newmetatable(L, "EntityMetaTable");
 	lua_pushstring(L, "__gc"); // Defining the __gc metamethod (invoked by :)
 	lua_pushlightuserdata(L, &lua_entities);
-	lua_pushlightuserdata(L, &fEntities);
+	lua_pushlightuserdata(L, fEntities); // It itself is already pointer to collection
 	lua_pushlightuserdata(L, &grid);
 	lua_pushcclosure(L, DestroyEntity, 3);
 	lua_settable(L, -3);
@@ -765,105 +586,6 @@ bool Game::lua_DefineMetaTables(){
 	return true;
 }
 
-std::string Game::lua_GetTableStr(lua_State *L, const char* property){
-	lua_pushstring(L, property);
-	lua_gettable(L, -2);
-	std::string ret = lua_tostring(L, -1);
-	lua_pop(L, 1);
-
-	return ret;
-}
-
-lua_Number Game::lua_GetTableNum(lua_State *L, const char* property){
-	lua_pushstring(L, property);
-	lua_gettable(L, -2);
-	float ret = lua_tonumber(L, -1);
-	lua_pop(L, 1);
-
-	return ret;
-}
-
-bool Game::lua_Check(lua_State *L, int r){
-	if(r != LUA_OK){
-		std::string errmsg = lua_tostring(L, -1);
-		std::cout << errmsg << std::endl;
-		return false;
-	}
-	return true;
-}
-
-bool Game::LoadMap(std::string map_name){
-	if(map_name == ""){
-		map_name = "default";
-	}
-	std::cout << "Loading map: " << map_name << std::endl;
-	std::ifstream map_file("../assets/maps/" + map_name + ".map");
-	if (!map_file.is_open())
-	{
-		return false;
-	}
-
-	std::string line;
-	int x = 1, y = 1;
-
-	// Do a quick pass for dimensions before reading data
-	while (std::getline(map_file, line))
-	{
-		std::istringstream iss(line);
-		int val;
-		x = 1;
-		while (iss >> val)
-		{
-			x++;
-		}
-		y++;
-	}
-	map_width = x;
-	map_height = y;
-
-	std::cout << map_width << std::endl;
-	std::cout << map_height << std::endl;
-
-	grid = new std::vector<Entity*>[map_width * map_height];
-
-	map_file.clear();
-	map_file.seekg(0, std::ios::beg);
-
-	y = 0;
-
-	while (std::getline(map_file, line))
-	{
-		std::istringstream iss(line);
-		int val;
-		x = 0;
-		while (iss >> val)
-		{
-			InitEntity(x, y, val, Z_INDEX::BACKGROUND);
-
-			std::string sVal;
-			if(val < 10){
-				sVal = "0" + std::to_string(val);
-			}
-			std::cout << sVal << " ";
-
-			x++;
-		}
-		std::cout << std::endl;
-		y++;
-	}
-	map_file.close();
-	p = InitEntity(1, 1, 99, Z_INDEX::FOREGROUND);
-
-	if(lua_Check(L, luaL_dofile(L, "../scripts/game.lua"))){
-		lua_getglobal(L, "Main");
-		if(lua_isfunction(L, -1)){
-			if(lua_Check(L, lua_pcall(L, 0, 0, 0))){
-			}
-		}
-	}
-
-	return true;
-}
 
 void Game::lua_printstack(lua_State* L)
 {
