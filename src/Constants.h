@@ -19,8 +19,6 @@ const unsigned int LUA_UPDATE_DELTA = 500;
 // MAJOR.MINOR.PATCH-STAGE
 extern std::string VERSION;
 
-#define GRID_TYPE std::vector<Entity*>
-
 const SDL_Color C_WHITE = { 255, 255, 255 };
 const SDL_Color C_RED = { 255, 0, 0 };
 const SDL_Color C_GREEN = { 0, 255, 0 };

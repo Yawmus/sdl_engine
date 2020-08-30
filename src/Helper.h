@@ -39,7 +39,7 @@ static void BlitTexture(GPU_Target *screen, std::vector<Entity*> eArr){
 
 
 
-static bool LoadMap(lua_State *L, std::string map_name, int &map_width, int &map_height, GRID_TYPE **grid, EntityManager* entity_manager){
+static bool LoadMap(lua_State *L, std::string map_name, int &map_width, int &map_height, EntityManager* entity_manager){
 	if(map_name == ""){
 		map_name = "default";
 	}
@@ -72,8 +72,6 @@ static bool LoadMap(lua_State *L, std::string map_name, int &map_width, int &map
 	std::cout << map_width << std::endl;
 	std::cout << map_height << std::endl;
 
-	*grid = new std::vector<Entity*>[map_width * map_height];
-
 	map_file.clear();
 	map_file.seekg(0, std::ios::beg);
 
@@ -87,17 +85,16 @@ static bool LoadMap(lua_State *L, std::string map_name, int &map_width, int &map
 		while (iss >> val)
 		{
 			Entity *e = entity_manager->InitEntity(x, y, val, Z_INDEX::BACKGROUND);
-			(*grid)[y * map_height + x].push_back(e);
 
 			std::string sVal;
 			if(val < 10){
 				sVal = "0" + std::to_string(val);
 			}
-			std::cout << sVal << " ";
+			//std::cout << sVal << " ";
 
 			x++;
 		}
-		std::cout << std::endl;
+		//std::cout << std::endl;
 		y++;
 	}
 	map_file.close();
@@ -105,7 +102,6 @@ static bool LoadMap(lua_State *L, std::string map_name, int &map_width, int &map
 	x = 1;
 	y = 1;
 	Entity *p = entity_manager->InitEntity(x, y, 99, Z_INDEX::FOREGROUND);
-	(*grid)[y * map_height + x].push_back(p);
 
 	return true;
 }

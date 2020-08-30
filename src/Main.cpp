@@ -4,6 +4,7 @@
 #include "MapMaker.h"
 
 #include <SDL_ttf.h> 
+#include <cxxopts.hpp>
 
 extern "C" {
 #include "lua.h"
@@ -17,20 +18,24 @@ std::string fps = "--";
 PROGRAM_STATE prog_state = PROGRAM_STATE::GAME;
 
 
-int main(int argc, char* argv[])
+int main(int argc, const char* argv[])
 {
+	cxxopts::Options options("Game", "Engine for 2D games");
+	options.add_options()
+		("d,debug", "Enable debugging") // a bool parameter
+		//("i,integer", "Int param", cxxopts::value<int>())
+		("m,file", "File name", cxxopts::value<std::string>())
+		("v,verbose", "Verbose output", cxxopts::value<bool>()->default_value("false"));
+	auto result = options.parse(argc, argv);
+	std::string map;
+	if(result.count("m")){
+		map = result["m"].as<std::string>();
+	}
+
 	GPU_SetDebugLevel(GPU_DEBUG_LEVEL_2);
 	if (GPU_GetDebugLevel() >= GPU_DEBUG_LEVEL_0) {
 		std::cout << "C++ version: " << __cplusplus << std::endl;
 	}
-
-	// Process args
-	std::string map;
-	if (argc >= 2)
-	{
-		map = argv[1];
-	}
-
 	
 	GPU_Target *screen = GPU_Init(WINDOW_WIDTH, WINDOW_HEIGHT, GPU_DEFAULT_INIT_FLAGS);
 	if(screen == NULL){
@@ -44,7 +49,10 @@ int main(int argc, char* argv[])
 		if(prog_state == PROGRAM_STATE::GAME)
 		{
 			Game* game = new Game();
-			game->Initialize(screen, map);
+			if(!game->Initialize(screen, map)){
+				prog_state = PROGRAM_STATE::NONE;
+				std::cerr << "Exiting..." << std::endl;
+			}
 
 			unsigned int delta, ticks, prev_ticks, frame_count = 0, start_time;
 			prev_ticks = start_time = SDL_GetTicks();
@@ -76,7 +84,10 @@ int main(int argc, char* argv[])
 		else if(prog_state == PROGRAM_STATE::MAP_MAKER)
 		{
 			MapMaker* map_maker = new MapMaker();
-			map_maker->Initialize(screen, map);
+			if(!map_maker->Initialize(screen, map)){
+				prog_state = PROGRAM_STATE::NONE;
+				std::cerr << "Exiting..." << std::endl;
+			}
 
 			unsigned int delta, ticks, prev_ticks, frame_count = 0, start_time;
 			prev_ticks = start_time = SDL_GetTicks();

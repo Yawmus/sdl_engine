@@ -49,7 +49,7 @@ ids[0] = {
 
 ids[1] = {
 	name = "Flat",
-	blocking = true,
+	blocking = false,
 	asset = "Terrain_tilemap",
 	region = {
 		x = 256,
@@ -61,7 +61,7 @@ ids[1] = {
 
 ids[2] = {
 	name = "Water",
-	blocking = false,
+	blocking = true,
 	asset = "Terrain_tilemap",
 	region = {
 		x = 32,

@@ -32,7 +32,7 @@ bool Game::IsRunning() const {
 	return this->isRunning;
 }
 
-void Game::Initialize(GPU_Target *screen, std::string file_name)
+bool Game::Initialize(GPU_Target *screen, std::string file_name)
 {
 	this->screen = screen;
 
@@ -54,7 +54,7 @@ void Game::Initialize(GPU_Target *screen, std::string file_name)
 
 	if(!lua_DefineMetaTables()){
 		std::cerr << "Unable to define meta tables" << std::endl;
-		return;
+		return false;
 	}
 
 	// If provided -- load state
@@ -62,13 +62,22 @@ void Game::Initialize(GPU_Target *screen, std::string file_name)
 		if(!LoadState(file_name))
 		{
 			std::cerr << "Unable to load game" << std::endl;
-			return;
+			return false;
 		}
 	}
 	// If provided -- load map file
 	else{
-		if(!LoadMap(L, file_name, map_width, map_height, &grid, &entity_manager)){
-			return;
+		if(!LoadMap(L, file_name, map_width, map_height, &entity_manager)){
+			std::cerr << "Unable to load map" << std::endl;
+			return false;
+		}
+
+		grid = new GRID_TYPE[map_width * map_height];
+		for(Entity *e : *bEntities){
+			grid[e->y * map_height + e->x].push_back(e);
+		}
+		for(Entity *e : *fEntities){
+			grid[e->y * map_height + e->x].push_back(e);
 		}
 
 		// Start lua
@@ -82,11 +91,9 @@ void Game::Initialize(GPU_Target *screen, std::string file_name)
 		p = entity_manager.GetPlayer();
 	}
 
-
-
 	isRunning = true;
 
-	return;
+	return true;
 }
 
 
@@ -115,6 +122,9 @@ bool Game::SaveState(){
 bool Game::LoadState(std::string path){
 	delete[] grid;
 	entity_manager.Clear();
+	std::cout << "lua entities size: " << lua_entities.size() << std::endl;
+	lua_entities.clear();
+	std::cout << "lua entities size: " << lua_entities.size() << std::endl;
 	
 	std::vector<Entity> raw_entities; // Used to re-create entities list
 	// using InitEntity
@@ -325,6 +335,7 @@ void Game::Render() {
 
 void Game::Destroy() {
 	delete[] grid;
+	lua_entities.clear();
 	delete canvas;
 }
 

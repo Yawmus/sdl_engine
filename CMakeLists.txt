@@ -57,8 +57,10 @@ if(APPLE)
 	set(LUA_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/lua_5.3/include")
 	set(LUA_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/lib/osx/lua_5.3/liblua.5.3.5.dylib")
 
-	set(CEREAL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
+	set(CEREAL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/cereal")
 	include_directories(${EXECUTABLE} ${CEREAL_INCLUDE_DIR})
+	set(CXXOPTS_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/cxxopts")
+	include_directories(${EXECUTABLE} ${CXXOPTS_INCLUDE_DIR})
 	
 elseif(WIN32)
 	set(SDL_GPU_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/win/SDL2_gpu_include")

@@ -18,7 +18,7 @@ std::vector<Entity*>* EntityManager::GetEntitiesRef(Z_INDEX z_index){
 	return nullptr;
 }
 
-std::vector<Entity>* EntityManager::GetAllEntitiesRef(){
+std::unordered_map<std::string, Entity>* EntityManager::GetAllEntitiesRef(){
 	return &entities;
 }
 
@@ -26,8 +26,15 @@ std::vector<Entity>* EntityManager::GetAllEntitiesRef(){
 Entity* EntityManager::InitEntity(int x, int y, int id, Z_INDEX z_index){
 	Entity_Type* et = asset_manager->GetEntityType(id);
 	GPU_Image* image = asset_manager->GetAsset(et->asset);
+	std::string key = create_key(x, y, z_index);
 
-	entities.push_back(Entity{
+	if(entities.find(key) != entities.end()){
+		std::cerr << "Entity already exists at location " << x << " " << y << std::endl;
+		return nullptr;
+	}
+
+	Entity &e = entities[key];
+	e = Entity{
 		x, // x
 		y, // y
 		id, // id
@@ -36,22 +43,51 @@ Entity* EntityManager::InitEntity(int x, int y, int id, Z_INDEX z_index){
 		image,
 		z_index,
 		LUA_NOREF // Not lua-managed
-	});
-
-	Entity *e = &entities.back();
+	};
 
 	if(z_index == Z_INDEX::BACKGROUND){
-		bEntities.push_back(e);
+		bEntities.push_back(&e);
 	}
 	else if(z_index == Z_INDEX::FOREGROUND){
-		fEntities.push_back(e);
+		fEntities.push_back(&e);
 	}
 
-	if(e->id == 99){ // Player
-		player = e;
+	if(e.id == 99){ // Player
+		player = &e;
 	}
 
-	return e;
+	return &e;
+}
+
+void EntityManager::DestroyEntity(Entity *_e){
+	std::cout << "_e: " << _e << std::endl;
+	std::cout << "zE size: " << bEntities.size() << std::endl;
+	if(_e->z_index == Z_INDEX::BACKGROUND){
+		auto it = find(bEntities.begin(), bEntities.end(), _e);
+		if(it != bEntities.end()){
+			int idx = 0;
+			idx = distance(bEntities.begin(), it);
+			bEntities.erase(bEntities.begin() + idx);
+		}
+		else{
+			std::cout << "Not found" << std::endl;
+
+		}
+	}
+	else if(_e->z_index == Z_INDEX::FOREGROUND){
+		auto it = find(fEntities.begin(), fEntities.end(), _e);
+		if(it != fEntities.end()){
+			int idx = 0;
+			idx = distance(fEntities.begin(), it);
+			fEntities.erase(fEntities.begin() + idx);
+		}
+	}
+	std::cout << "zE size: " << bEntities.size() << std::endl;
+	std::cout << "_e: " << _e << std::endl;
+	std::cout << "e size: " << entities.size() << std::endl;
+	std::string key = create_key(_e->x, _e->y, _e->z_index);
+	entities.erase(key);
+	std::cout << "e size: " << entities.size() << std::endl;
 }
 
 Entity* EntityManager::GetPlayer() const{

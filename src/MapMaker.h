@@ -26,7 +26,7 @@
 
 class MapMaker {
     private:
-		std::vector<Entity>* entities;
+		EntityMap* entities;
 		std::vector<Entity*>* bEntities;
 		std::vector<Entity*>* fEntities;
 		GRID_TYPE *grid;
@@ -44,7 +44,7 @@ class MapMaker {
 		MapMaker();
 		~MapMaker();
 		bool IsRunning() const;
-		void Initialize(GPU_Target* screen, std::string);
+		bool Initialize(GPU_Target* screen, std::string);
 		//bool lua_DefineMetaTables();
 		void ProcessInput();
 		void Update(int);

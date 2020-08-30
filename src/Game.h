@@ -22,9 +22,12 @@ extern "C"{
 
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/json.hpp>
+#include <cereal/types/unordered_map.hpp>
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <fstream>
+
+#define GRID_TYPE std::vector<Entity*>
 
 
 class Game {
@@ -34,7 +37,7 @@ class Game {
 
 		std::vector<Entity*>* fEntities;
 		std::vector<Entity*>* bEntities;
-		std::vector<Entity>* entities; // Destroyed since engine-managed
+		EntityMap* entities; // Destroyed since engine-managed
 
 		std::vector<Entity*> lua_entities; // Owned by Game class. lua-managed
 
@@ -50,7 +53,7 @@ class Game {
 		Game();
 		~Game();
 		bool IsRunning() const;
-		void Initialize(GPU_Target* screen, std::string);
+		bool Initialize(GPU_Target* screen, std::string);
 		void ProcessInput();
 		void Update(int);
 		void Move(Entity*, Transform);
