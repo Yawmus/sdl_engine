@@ -21,7 +21,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON )
 add_library(
 	INC
 	src/Constants.h
-	src/Helper.h
 	src/Entity.h
 	src/Entity.cpp
 	src/Game.h
@@ -34,6 +33,8 @@ add_library(
 	src/EntityManager.cpp
 	src/AssetManager.h
 	src/AssetManager.cpp
+	src/Helper.h
+	src/Util.h
 )
 
 #find_package(SDL2 REQUIRED)

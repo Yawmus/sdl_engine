@@ -115,3 +115,15 @@ int AssetManager::GetProp(Entity_Type* et){
 	return prop;
 }
 
+GPU_Image* AssetManager::LoadImage(const char* image_path){
+	GPU_Image* image = GPU_LoadImage(image_path);
+	if(image == NULL)
+	{
+		std::cerr << "Failed to load image: " << image_path << std::endl;
+	}
+	else{
+		image->use_blending = false; // Opaque
+	}
+	return image;
+}
+

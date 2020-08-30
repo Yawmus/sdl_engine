@@ -100,8 +100,7 @@ CMakeFiles/INC.dir/src/AssetManager.cpp.o
  /Users/Yawmus/projects/sdl_engine/src/AssetManager.h
  /Users/Yawmus/projects/sdl_engine/src/Constants.h
  /Users/Yawmus/projects/sdl_engine/src/Entity.h
- /Users/Yawmus/projects/sdl_engine/src/EntityManager.h
- /Users/Yawmus/projects/sdl_engine/src/Helper.h
+ /Users/Yawmus/projects/sdl_engine/src/Util.h
 CMakeFiles/INC.dir/src/Entity.cpp.o
  ../include/cereal/access.hpp
  ../include/cereal/archives/json.hpp
@@ -296,7 +295,7 @@ CMakeFiles/INC.dir/src/EntityManager.cpp.o
  /Users/Yawmus/projects/sdl_engine/src/Entity.h
  /Users/Yawmus/projects/sdl_engine/src/EntityManager.cpp
  /Users/Yawmus/projects/sdl_engine/src/EntityManager.h
- /Users/Yawmus/projects/sdl_engine/src/Helper.h
+ /Users/Yawmus/projects/sdl_engine/src/Util.h
 CMakeFiles/INC.dir/src/Game.cpp.o
  ../include/cereal/access.hpp
  ../include/cereal/archives/binary.hpp
@@ -406,6 +405,7 @@ CMakeFiles/INC.dir/src/Game.cpp.o
  /Users/Yawmus/projects/sdl_engine/src/Game.h
  /Users/Yawmus/projects/sdl_engine/src/Helper.h
  /Users/Yawmus/projects/sdl_engine/src/UI_Canvas.h
+ /Users/Yawmus/projects/sdl_engine/src/Util.h
 CMakeFiles/INC.dir/src/MapMaker.cpp.o
  ../include/cereal/access.hpp
  ../include/cereal/archives/binary.hpp
@@ -515,6 +515,7 @@ CMakeFiles/INC.dir/src/MapMaker.cpp.o
  /Users/Yawmus/projects/sdl_engine/src/MapMaker.cpp
  /Users/Yawmus/projects/sdl_engine/src/MapMaker.h
  /Users/Yawmus/projects/sdl_engine/src/UI_Canvas.h
+ /Users/Yawmus/projects/sdl_engine/src/Util.h
 CMakeFiles/INC.dir/src/UI_Canvas.cpp.o
  ../lib/osx/SDL2.framework/Headers/SDL.h
  ../lib/osx/SDL2.framework/Headers/SDL_assert.h

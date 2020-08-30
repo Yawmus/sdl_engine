@@ -99,8 +99,7 @@ CMakeFiles/INC.dir/src/AssetManager.cpp.o: ../src/AssetManager.cpp
 CMakeFiles/INC.dir/src/AssetManager.cpp.o: ../src/AssetManager.h
 CMakeFiles/INC.dir/src/AssetManager.cpp.o: ../src/Constants.h
 CMakeFiles/INC.dir/src/AssetManager.cpp.o: ../src/Entity.h
-CMakeFiles/INC.dir/src/AssetManager.cpp.o: ../src/EntityManager.h
-CMakeFiles/INC.dir/src/AssetManager.cpp.o: ../src/Helper.h
+CMakeFiles/INC.dir/src/AssetManager.cpp.o: ../src/Util.h
 
 CMakeFiles/INC.dir/src/Entity.cpp.o: ../include/cereal/access.hpp
 CMakeFiles/INC.dir/src/Entity.cpp.o: ../include/cereal/archives/json.hpp
@@ -295,7 +294,7 @@ CMakeFiles/INC.dir/src/EntityManager.cpp.o: ../src/Constants.h
 CMakeFiles/INC.dir/src/EntityManager.cpp.o: ../src/Entity.h
 CMakeFiles/INC.dir/src/EntityManager.cpp.o: ../src/EntityManager.cpp
 CMakeFiles/INC.dir/src/EntityManager.cpp.o: ../src/EntityManager.h
-CMakeFiles/INC.dir/src/EntityManager.cpp.o: ../src/Helper.h
+CMakeFiles/INC.dir/src/EntityManager.cpp.o: ../src/Util.h
 
 CMakeFiles/INC.dir/src/Game.cpp.o: ../include/cereal/access.hpp
 CMakeFiles/INC.dir/src/Game.cpp.o: ../include/cereal/archives/binary.hpp
@@ -405,6 +404,7 @@ CMakeFiles/INC.dir/src/Game.cpp.o: ../src/Game.cpp
 CMakeFiles/INC.dir/src/Game.cpp.o: ../src/Game.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../src/Helper.h
 CMakeFiles/INC.dir/src/Game.cpp.o: ../src/UI_Canvas.h
+CMakeFiles/INC.dir/src/Game.cpp.o: ../src/Util.h
 
 CMakeFiles/INC.dir/src/MapMaker.cpp.o: ../include/cereal/access.hpp
 CMakeFiles/INC.dir/src/MapMaker.cpp.o: ../include/cereal/archives/binary.hpp
@@ -514,6 +514,7 @@ CMakeFiles/INC.dir/src/MapMaker.cpp.o: ../src/Helper.h
 CMakeFiles/INC.dir/src/MapMaker.cpp.o: ../src/MapMaker.cpp
 CMakeFiles/INC.dir/src/MapMaker.cpp.o: ../src/MapMaker.h
 CMakeFiles/INC.dir/src/MapMaker.cpp.o: ../src/UI_Canvas.h
+CMakeFiles/INC.dir/src/MapMaker.cpp.o: ../src/Util.h
 
 CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../lib/osx/SDL2.framework/Headers/SDL.h
 CMakeFiles/INC.dir/src/UI_Canvas.cpp.o: ../lib/osx/SDL2.framework/Headers/SDL_assert.h

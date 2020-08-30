@@ -19,7 +19,8 @@ class EntityManager{
 	public:
 		EntityManager(AssetManager*);
 		~EntityManager();
-		std::vector<Entity*>* GetEntities(Z_INDEX);
+		std::vector<Entity*>* GetEntitiesRef(Z_INDEX);
+		std::vector<Entity>* GetAllEntitiesRef();
 		Entity* GetPlayer() const;
 		Entity* InitEntity(int, int, int, Z_INDEX);
 

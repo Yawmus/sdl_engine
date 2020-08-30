@@ -8,25 +8,10 @@
 #include "Entity.h"
 #include "Constants.h"
 #include "EntityManager.h"
-
-extern "C"{
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
+#include "Util.h"
 
 
-static GPU_Image* LoadImage(const char* image_path){
-	GPU_Image* image = GPU_LoadImage(image_path);
-	if(image == NULL)
-	{
-		std::cerr << "Failed to load image: " << image_path << std::endl;
-	}
-	else{
-		image->use_blending = false; // Opaque
-	}
-	return image;
-}
+
 
 static void BlitTexture(GPU_Target *screen, std::vector<Entity*> eArr){
 	for(Entity* e : eArr)
@@ -50,45 +35,11 @@ static void BlitTexture(GPU_Target *screen, std::vector<Entity*> eArr){
 
 
 
-static bool lua_Check(lua_State *L, int r){
-	if(r != LUA_OK){
-		std::string errmsg = lua_tostring(L, -1);
-		std::cout << errmsg << std::endl;
-		return false;
-	}
-	return true;
-}
-
-static std::string lua_GetTableStr(lua_State *L, const char* property){
-	lua_pushstring(L, property);
-	lua_gettable(L, -2);
-	std::string ret = lua_tostring(L, -1);
-	lua_pop(L, 1);
-
-	return ret;
-}
-
-static lua_Number lua_GetTableNum(lua_State *L, const char* property){
-	lua_pushstring(L, property);
-	lua_gettable(L, -2);
-	float ret = lua_tonumber(L, -1);
-	lua_pop(L, 1);
-
-	return ret;
-}
-
-static int GetProp(Entity_Type* et){
-	int prop = 0;
-	if(et->blocking){
-		prop += 0b0001; // Blocked
-	}
-
-	return prop;
-}
 
 
 
-static std::vector<Entity*>* LoadMap(lua_State *L, std::string map_name, int &map_width, int &map_height, EntityManager* entity_manager){
+
+static bool LoadMap(lua_State *L, std::string map_name, int &map_width, int &map_height, GRID_TYPE **grid, EntityManager* entity_manager){
 	if(map_name == ""){
 		map_name = "default";
 	}
@@ -96,7 +47,8 @@ static std::vector<Entity*>* LoadMap(lua_State *L, std::string map_name, int &ma
 	std::ifstream map_file("../assets/maps/" + map_name + ".map");
 	if (!map_file.is_open())
 	{
-		return 0;
+		std::cerr << "Unable to open map file" << std::endl;
+		return false;
 	}
 
 	std::string line;
@@ -120,7 +72,7 @@ static std::vector<Entity*>* LoadMap(lua_State *L, std::string map_name, int &ma
 	std::cout << map_width << std::endl;
 	std::cout << map_height << std::endl;
 
-	std::vector<Entity*> *grid = new std::vector<Entity*>[map_width * map_height];
+	*grid = new std::vector<Entity*>[map_width * map_height];
 
 	map_file.clear();
 	map_file.seekg(0, std::ios::beg);
@@ -135,7 +87,7 @@ static std::vector<Entity*>* LoadMap(lua_State *L, std::string map_name, int &ma
 		while (iss >> val)
 		{
 			Entity *e = entity_manager->InitEntity(x, y, val, Z_INDEX::BACKGROUND);
-			grid[y * map_height + x].push_back(e);
+			(*grid)[y * map_height + x].push_back(e);
 
 			std::string sVal;
 			if(val < 10){
@@ -153,17 +105,9 @@ static std::vector<Entity*>* LoadMap(lua_State *L, std::string map_name, int &ma
 	x = 1;
 	y = 1;
 	Entity *p = entity_manager->InitEntity(x, y, 99, Z_INDEX::FOREGROUND);
-	grid[y * map_height + x].push_back(p);
+	(*grid)[y * map_height + x].push_back(p);
 
-	if(lua_Check(L, luaL_dofile(L, "../scripts/game.lua"))){
-		lua_getglobal(L, "Main");
-		if(lua_isfunction(L, -1)){
-			if(lua_Check(L, lua_pcall(L, 0, 0, 0))){
-			}
-		}
-	}
-
-	return grid;
+	return true;
 }
 
 #endif

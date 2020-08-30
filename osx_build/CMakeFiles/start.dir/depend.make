@@ -106,7 +106,9 @@ CMakeFiles/start.dir/src/Main.cpp.o: ../src/Constants.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/Entity.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/EntityManager.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/Game.h
+CMakeFiles/start.dir/src/Main.cpp.o: ../src/Helper.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/Main.cpp
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/MapMaker.h
 CMakeFiles/start.dir/src/Main.cpp.o: ../src/UI_Canvas.h
+CMakeFiles/start.dir/src/Main.cpp.o: ../src/Util.h
 

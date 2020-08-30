@@ -58,5 +58,15 @@ struct Entity_Type {
 	GPU_Rect* region;
 };
 
+static int GetProp(Entity_Type* et){
+	int prop = 0;
+	if(et->blocking){
+		prop += 0b0001; // Blocked
+	}
+
+	return prop;
+}
+
+
 #endif
 

@@ -6,7 +6,8 @@
 #include <unordered_map>
 
 #include "Constants.h"
-#include "Helper.h"
+#include "Entity.h"
+#include "Util.h"
 
 extern "C"{
 #include "lua.h"
@@ -24,6 +25,7 @@ class AssetManager{
 		GPU_Image* GetAsset(std::string);
 		Entity_Type* GetEntityType(int);
 		int GetProp(Entity_Type*);
+		GPU_Image* LoadImage(const char*);
 };
 
 #endif

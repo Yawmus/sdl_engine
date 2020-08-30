@@ -1146,10 +1146,6 @@ assert.h
 lua.h
 ../lib/osx/lua_5.3/include/lua.h
 
-/Users/Yawmus/projects/sdl_engine/src/AssetManager.cpp
-AssetManager.h
-/Users/Yawmus/projects/sdl_engine/src/AssetManager.h
-
 /Users/Yawmus/projects/sdl_engine/src/AssetManager.h
 SDL_gpu.h
 -
@@ -1159,8 +1155,10 @@ unordered_map
 -
 Constants.h
 /Users/Yawmus/projects/sdl_engine/src/Constants.h
-Helper.h
-/Users/Yawmus/projects/sdl_engine/src/Helper.h
+Entity.h
+/Users/Yawmus/projects/sdl_engine/src/Entity.h
+Util.h
+/Users/Yawmus/projects/sdl_engine/src/Util.h
 lua.h
 /Users/Yawmus/projects/sdl_engine/src/lua.h
 lualib.h
@@ -1186,10 +1184,6 @@ string
 cereal/archives/json.hpp
 -
 
-/Users/Yawmus/projects/sdl_engine/src/EntityManager.cpp
-EntityManager.h
-/Users/Yawmus/projects/sdl_engine/src/EntityManager.h
-
 /Users/Yawmus/projects/sdl_engine/src/EntityManager.h
 SDL_gpu.h
 -
@@ -1207,8 +1201,6 @@ iostream
 -
 Game.h
 /Users/Yawmus/projects/sdl_engine/src/Game.h
-Entity.h
-/Users/Yawmus/projects/sdl_engine/src/Entity.h
 SDL.h
 -
 set
@@ -1241,6 +1233,8 @@ Constants.h
 /Users/Yawmus/projects/sdl_engine/src/Constants.h
 Helper.h
 /Users/Yawmus/projects/sdl_engine/src/Helper.h
+Helper.h
+/Users/Yawmus/projects/sdl_engine/src/Helper.h
 AssetManager.h
 /Users/Yawmus/projects/sdl_engine/src/AssetManager.h
 EntityManager.h
@@ -1277,12 +1271,8 @@ Constants.h
 /Users/Yawmus/projects/sdl_engine/src/Constants.h
 EntityManager.h
 /Users/Yawmus/projects/sdl_engine/src/EntityManager.h
-lua.h
-/Users/Yawmus/projects/sdl_engine/src/lua.h
-lualib.h
-/Users/Yawmus/projects/sdl_engine/src/lualib.h
-lauxlib.h
-/Users/Yawmus/projects/sdl_engine/src/lauxlib.h
+Util.h
+/Users/Yawmus/projects/sdl_engine/src/Util.h
 
 /Users/Yawmus/projects/sdl_engine/src/MapMaker.cpp
 MapMaker.h
@@ -1307,6 +1297,8 @@ Constants.h
 /Users/Yawmus/projects/sdl_engine/src/Constants.h
 Helper.h
 /Users/Yawmus/projects/sdl_engine/src/Helper.h
+Util.h
+/Users/Yawmus/projects/sdl_engine/src/Util.h
 AssetManager.h
 /Users/Yawmus/projects/sdl_engine/src/AssetManager.h
 EntityManager.h
@@ -1333,4 +1325,16 @@ unordered_map
 -
 Constants.h
 /Users/Yawmus/projects/sdl_engine/src/Constants.h
+
+/Users/Yawmus/projects/sdl_engine/src/Util.h
+string
+-
+iostream
+-
+lua.h
+/Users/Yawmus/projects/sdl_engine/src/lua.h
+lualib.h
+/Users/Yawmus/projects/sdl_engine/src/lualib.h
+lauxlib.h
+/Users/Yawmus/projects/sdl_engine/src/lauxlib.h
 

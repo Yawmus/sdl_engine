@@ -10,6 +10,7 @@
 #include "UI_Canvas.h"
 #include "Constants.h"
 #include "Helper.h"
+#include "Util.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
 
@@ -25,6 +26,7 @@
 
 class MapMaker {
     private:
+		std::vector<Entity>* entities;
 		std::vector<Entity*>* bEntities;
 		std::vector<Entity*>* fEntities;
 		GRID_TYPE *grid;
@@ -43,6 +45,7 @@ class MapMaker {
 		~MapMaker();
 		bool IsRunning() const;
 		void Initialize(GPU_Target* screen, std::string);
+		//bool lua_DefineMetaTables();
 		void ProcessInput();
 		void Update(int);
 		void Render();

@@ -12,7 +12,7 @@ extern "C" {
 }
 
 
-std::string VERSION = "1.0.0-alpha";
+std::string VERSION = "1.0.1-alpha";
 std::string fps = "--";
 PROGRAM_STATE prog_state = PROGRAM_STATE::GAME;
 

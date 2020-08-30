@@ -10,6 +10,7 @@
 #include "UI_Canvas.h"
 #include "Constants.h"
 #include "Helper.h"
+#include "Helper.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
 

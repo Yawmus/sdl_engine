@@ -18,17 +18,15 @@ void MapMaker::Initialize(GPU_Target *screen, std::string file_name)
 
 	// Init entity manager
 	entity_manager.Alloc();
-	fEntities = entity_manager.GetEntities(Z_INDEX::FOREGROUND);
-	bEntities = entity_manager.GetEntities(Z_INDEX::BACKGROUND);
+	entities = entity_manager.GetAllEntitiesRef();
+	fEntities = entity_manager.GetEntitiesRef(Z_INDEX::FOREGROUND);
+	bEntities = entity_manager.GetEntitiesRef(Z_INDEX::BACKGROUND);
 
 	canvas = new UI_Canvas();
 	canvas->UpdateLabel(70, WINDOW_HEIGHT - 20, "Map maker", "title", C_WHITE, "md");
 	canvas->UpdateLabel(210, WINDOW_HEIGHT - 18, VERSION.c_str(), "version", C_WHITE, "sm");
 
-
-	grid = LoadMap(L, file_name, map_width, map_height, &entity_manager);
-	if(grid == 0){
-		std::cerr << "Unable to open map file" << std::endl;
+	if(!LoadMap(L, file_name, map_width, map_height, &grid, &entity_manager)){
 		return;
 	}
 
@@ -77,7 +75,7 @@ void MapMaker::Render() {
 
 
 	// Draw background
-	GPU_Image *img = LoadImage("../assets/images/gray.png");
+	GPU_Image *img = asset_manager.LoadImage("../assets/images/gray.png");
 	GPU_Rect *region = new GPU_Rect{ 0, 0, (float)img->base_w, (float)img->base_h };
 	float scaleX = map_width;
 	float scaleY = map_height;

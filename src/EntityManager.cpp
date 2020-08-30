@@ -8,7 +8,7 @@ EntityManager::~EntityManager(){
 	Clear();
 }
 
-std::vector<Entity*>* EntityManager::GetEntities(Z_INDEX z_index){
+std::vector<Entity*>* EntityManager::GetEntitiesRef(Z_INDEX z_index){
 	if(z_index == Z_INDEX::FOREGROUND){
 		return &fEntities;
 	}
@@ -17,6 +17,11 @@ std::vector<Entity*>* EntityManager::GetEntities(Z_INDEX z_index){
 	}
 	return nullptr;
 }
+
+std::vector<Entity>* EntityManager::GetAllEntitiesRef(){
+	return &entities;
+}
+
 
 Entity* EntityManager::InitEntity(int x, int y, int id, Z_INDEX z_index){
 	Entity_Type* et = asset_manager->GetEntityType(id);
@@ -64,6 +69,7 @@ void EntityManager::Clear(){
 	entities.clear();
 	bEntities.clear();
 	fEntities.clear();
+	player = nullptr;
 }
 
 

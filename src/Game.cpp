@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Game.h"
-#include "Entity.h"
 #include <SDL.h>
 #include <set>
 #include <vector>
@@ -48,8 +47,9 @@ void Game::Initialize(GPU_Target *screen, std::string file_name)
 
 	// Init entity manager
 	entity_manager.Alloc();
-	fEntities = entity_manager.GetEntities(Z_INDEX::FOREGROUND);
-	bEntities = entity_manager.GetEntities(Z_INDEX::BACKGROUND);
+	entities = entity_manager.GetAllEntitiesRef();
+	fEntities = entity_manager.GetEntitiesRef(Z_INDEX::FOREGROUND);
+	bEntities = entity_manager.GetEntitiesRef(Z_INDEX::BACKGROUND);
 
 
 	if(!lua_DefineMetaTables()){
@@ -67,10 +67,17 @@ void Game::Initialize(GPU_Target *screen, std::string file_name)
 	}
 	// If provided -- load map file
 	else{
-		grid = LoadMap(L, file_name, map_width, map_height, &entity_manager);
-		if(grid == 0){
-			std::cerr << "Unable to open map file" << std::endl;
+		if(!LoadMap(L, file_name, map_width, map_height, &grid, &entity_manager)){
 			return;
+		}
+
+		// Start lua
+		if(lua_Check(L, luaL_dofile(L, "../scripts/game.lua"))){
+			lua_getglobal(L, "Main");
+			if(lua_isfunction(L, -1)){
+				if(lua_Check(L, lua_pcall(L, 0, 0, 0))){
+				}
+			}
 		}
 		p = entity_manager.GetPlayer();
 	}
