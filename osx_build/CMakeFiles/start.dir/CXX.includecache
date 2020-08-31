@@ -1351,6 +1351,8 @@ cereal/archives/binary.hpp
 -
 cereal/archives/json.hpp
 -
+cereal/types/unordered_map.hpp
+-
 cereal/types/vector.hpp
 -
 cereal/types/memory.hpp

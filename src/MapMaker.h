@@ -16,6 +16,7 @@
 
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/json.hpp>
+#include <cereal/types/unordered_map.hpp>
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <fstream>
@@ -23,22 +24,25 @@
 #define ASSET_TYPE std::unordered_map<std::string, GPU_Image*>
 #define ID_TYPE std::unordered_map<int, Entity_Type*>
 #define GRID_TYPE std::vector<Entity*>
+#define create_asset_key(f, s, x, y) ("f: " + std::string(f) + ", s: " + std::string(s) + ", x: " + std::to_string(x) + ", y: " + std::to_string(y))
 
 class MapMaker {
     private:
 		EntityMap* entities;
 		std::vector<Entity*>* bEntities;
 		std::vector<Entity*>* fEntities;
+		AssetManager asset_manager;
+		std::unordered_map<std::string, std::string> asset_map;
 		GRID_TYPE *grid;
 
 		UI_Canvas *canvas;
 		bool isRunning;
 		GPU_Target *screen;
 		std::vector<GPU_Rect*> palatte;
-		AssetManager asset_manager;
 		EntityManager entity_manager;
 		lua_State * L;
 		int map_width, map_height;
+		std::string selectedTex = "grass";
 
     public:
 		MapMaker();
@@ -50,6 +54,10 @@ class MapMaker {
 		void Update(int);
 		void Render();
 		void Destroy();
+		bool LoadState(std::string);
+		bool SaveState();
+
+
 		//bool SaveState();
 		//bool LoadState(std::string state);
 };

@@ -30,10 +30,12 @@ function Main (file)
 		width = jsonparse["width"]
 
 		local i = 1
-		while jsonparse["entities"][i] do
-			raw_e = jsonparse["lua_entities"][i]
-			entity = CreateEntity(raw_e["x"], raw_e["y"], raw_e["id"])
-			i = i + 1
+		if jsonparse["lua_entities"] ~= nil then
+			while jsonparse["entities"][i] do
+				raw_e = jsonparse["lua_entities"][i]
+				entity = CreateEntity(raw_e["x"], raw_e["y"], raw_e["id"])
+				i = i + 1
+			end
 		end
 	else -- Fresh start
 		x = 5

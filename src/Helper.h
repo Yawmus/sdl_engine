@@ -29,6 +29,8 @@ static void BlitTexture(GPU_Target *screen, std::vector<Entity*> eArr){
 		// Top-left pivot offsets
 		x += UNIT_WIDTH / 2;
 		y += UNIT_HEIGHT / 2;
+
+
 		GPU_BlitTransform(e->image, e->region, screen, x, y, 0, scaleW, scaleH);
 	}
 }

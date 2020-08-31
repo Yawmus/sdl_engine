@@ -122,11 +122,9 @@ bool Game::SaveState(){
 bool Game::LoadState(std::string path){
 	delete[] grid;
 	entity_manager.Clear();
-	std::cout << "lua entities size: " << lua_entities.size() << std::endl;
 	lua_entities.clear();
-	std::cout << "lua entities size: " << lua_entities.size() << std::endl;
 	
-	std::vector<Entity> raw_entities; // Used to re-create entities list
+	EntityMap raw_entities; // Used to re-create entities list
 	// using InitEntity
 	raw_entities.reserve(1000);
 
@@ -141,11 +139,10 @@ bool Game::LoadState(std::string path){
 
 	grid = new std::vector<Entity*>[map_width * map_height];
 
-	for(int i=0; i<raw_entities.size(); i++){
-		Entity raw_e = raw_entities[i];
+	for (auto& it: raw_entities) {
+		Entity &raw_e = it.second;
 		Entity *e = entity_manager.InitEntity(raw_e.x, raw_e.y, raw_e.id, raw_e.z_index);
 		grid[raw_e.y * map_height + raw_e.x].push_back(e);
-
 		if(e->id == 99) /* Player */
 		{
 			p = e;
@@ -210,19 +207,17 @@ void Game::ProcessInput(){
 				prog_state = PROGRAM_STATE::NONE;
 				isRunning = false;
 			}
-			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_1) {
-			}
-			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_2) {
+			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_TAB) {
 				prog_state = PROGRAM_STATE::MAP_MAKER;
 				isRunning = false;
 			}
-			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_3) {
+			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_9) {
 				SaveState();
 				int x = WINDOW_WIDTH / 2 - 20;
 				int y = WINDOW_HEIGHT - 30;
 				canvas->UpdateLabel(x, y, "Saved", "status", C_GREEN, "md");
 			}
-			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_4) {
+			else if(event.key.keysym.sym == SDL_KeyCode::SDLK_0) {
 				LoadState("data.json");
 				int x = WINDOW_WIDTH / 2 - 20;
 				int y = WINDOW_HEIGHT - 30;

@@ -9,6 +9,17 @@ AssetManager::~AssetManager(){
 	}
 }
 
+int AssetManager::GetId(std::string name){
+	for (auto& it: id_map) {
+		if(it.second->name == name)
+		{
+			return it.first;
+		}
+	}
+	std::cerr << "Failed to find id for name: " << name << std::endl;
+	return 100;
+}
+
 GPU_Image* AssetManager::GetAsset(std::string asset){
 	if(assets.find(asset) == assets.end())
 	{
@@ -31,15 +42,28 @@ Entity_Type* AssetManager::GetEntityType(int id){
 
 void AssetManager::LoadAssets(lua_State *L){
 	if(lua_Check(L, luaL_dofile(L, "../scripts/assets.lua"))){
-		std::vector<int> entity_ids {
-			0,
-				1,
-				2,
-				50,
-				98,
-				99,
-				100 // unknown
-		};
+		std::vector<int> entity_ids;
+		lua_getglobal(L, "GetAllIds");
+		if(lua_isfunction(L, -1)){
+			if(lua_Check(L, lua_pcall(L, 0, 1, 0))){
+				if(lua_istable(L, -1)){
+					// First element is length
+					int i=1;
+					lua_pushinteger(L, i++);
+					lua_gettable(L, -2);
+					int len = (int)lua_tonumber(L, -1);
+					lua_pop(L, 1);
+					while(i < len+2 /* 1-indexed and offset from len */){
+						lua_pushinteger(L, i++);
+						lua_gettable(L, -2);
+						int t = (int)lua_tonumber(L, -1);
+						entity_ids.push_back(t);
+						lua_pop(L, 1);
+					}
+					lua_pop(L, 1); // Remove table from stack
+				}
+			}
+		}
 		for(int id : entity_ids){
 			lua_getglobal(L, "GetEntityType");
 			if(lua_isfunction(L, -1)){
@@ -104,8 +128,22 @@ void AssetManager::LoadAssets(lua_State *L){
 		}
 	}
 }
-
-
+void AssetManager::lua_printstack(lua_State* L)
+{
+    int stack = lua_gettop(L);
+    for (int i = 1; i <= stack; i++)
+    {
+        std::cout << std::dec << i << ": " << lua_typename(L, lua_type(L, i));
+        switch(lua_type(L, i))
+        {
+        case LUA_TBOOLEAN: std::cout << " " << lua_toboolean(L, i); break;
+        case LUA_TSTRING: std::cout << " " << lua_tostring(L, i); break;
+        case LUA_TNUMBER: std::cout << " " << std::dec << (uintptr_t)lua_tointeger(L, i) << " (0x" << std::hex << lua_tointeger(L, i) << ")"; break;
+        default: std::cout << " " << std::hex << lua_topointer(L, i); break;
+        }
+        std::cout << std::endl;
+    }
+}
 int AssetManager::GetProp(Entity_Type* et){
 	int prop = 0;
 	if(et->blocking){

@@ -22,7 +22,6 @@ std::unordered_map<std::string, Entity>* EntityManager::GetAllEntitiesRef(){
 	return &entities;
 }
 
-
 Entity* EntityManager::InitEntity(int x, int y, int id, Z_INDEX z_index){
 	Entity_Type* et = asset_manager->GetEntityType(id);
 	GPU_Image* image = asset_manager->GetAsset(et->asset);
@@ -107,5 +106,6 @@ void EntityManager::Clear(){
 	fEntities.clear();
 	player = nullptr;
 }
+
 
 

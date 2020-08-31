@@ -26,6 +26,8 @@ class AssetManager{
 		Entity_Type* GetEntityType(int);
 		int GetProp(Entity_Type*);
 		GPU_Image* LoadImage(const char*);
+		void lua_printstack(lua_State*);
+		int GetId(std::string);
 };
 
 #endif

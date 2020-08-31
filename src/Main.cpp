@@ -24,14 +24,17 @@ int main(int argc, const char* argv[])
 	options.add_options()
 		("d,debug", "Enable debugging") // a bool parameter
 		//("i,integer", "Int param", cxxopts::value<int>())
-		("m,file", "File name", cxxopts::value<std::string>())
+		("f,file", "File name", cxxopts::value<std::string>())
+		("mapmaker", "Launch map maker")
 		("v,verbose", "Verbose output", cxxopts::value<bool>()->default_value("false"));
 	auto result = options.parse(argc, argv);
 	std::string map;
-	if(result.count("m")){
-		map = result["m"].as<std::string>();
+	if(result.count("f")){
+		map = result["f"].as<std::string>();
 	}
-
+	if(result.count("mapmaker")){
+		prog_state = PROGRAM_STATE::MAP_MAKER;
+	}
 	GPU_SetDebugLevel(GPU_DEBUG_LEVEL_2);
 	if (GPU_GetDebugLevel() >= GPU_DEBUG_LEVEL_0) {
 		std::cout << "C++ version: " << __cplusplus << std::endl;
